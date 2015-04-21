@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 class PagerAdapter extends FragmentPagerAdapter {
     PagerGamersFragment firstPage;
     SecondFragment secondPage;
+
     public PagerAdapter(FragmentManager fm) {
         super(fm);
         firstPage = new PagerGamersFragment();
@@ -18,7 +19,7 @@ class PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        if (i==0)
+        if (i == 0)
             return firstPage;
 
         return new SecondFragment();

@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-
 import comuncleandr.twitter.championship.dummy.DummyContent;
 
 /**
@@ -48,6 +47,13 @@ public class SecondFragment extends Fragment implements AbsListView.OnItemClickL
      */
     private ListAdapter mAdapter;
 
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public SecondFragment() {
+    }
+
     // TODO: Rename and change types of parameters
     public static SecondFragment newInstance(String param1, String param2) {
         SecondFragment fragment = new SecondFragment();
@@ -56,13 +62,6 @@ public class SecondFragment extends Fragment implements AbsListView.OnItemClickL
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public SecondFragment() {
     }
 
     @Override
@@ -98,7 +97,7 @@ public class SecondFragment extends Fragment implements AbsListView.OnItemClickL
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-          //  mListener = (OnFragmentInteractionListener) activity;
+            //  mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");

@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 
 
 /**
@@ -19,6 +20,10 @@ import android.support.v4.app.Fragment;
  */
 public class PagerGamersFragment extends android.support.v4.app.Fragment {
     private OnFragmentInteractionListener mListener;
+
+    public PagerGamersFragment() {
+        // Required empty public constructor
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -34,20 +39,23 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment {
         return fragment;
     }
 
-    public PagerGamersFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pager, container, false);
+        return inflater.inflate(R.layout.fragment_pager_gamers, container, false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_gamers, menu);
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -61,7 +69,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-          //  mListener = (OnFragmentInteractionListener) activity;
+            //  mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
