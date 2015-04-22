@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_add_gamer"
-        android:title="+"
+        android:icon="@drawable/ic_action_user_add"
+        android:title="Добавить игрока"
         app:showAsAction="always" />
 </menu>
