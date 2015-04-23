@@ -7,45 +7,48 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity
+{
 
     PagerAdapter mAdapter;
     ViewPager mViewPager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void onCreate( Bundle savedInstanceState )
+    {
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_main );
 
-        mAdapter =
-                new PagerAdapter(
-                        getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.view);
-        mViewPager.setAdapter(mAdapter);
+        mAdapter = new PagerAdapter( getSupportFragmentManager( ) );
+        mViewPager = ( ViewPager ) findViewById( R.id.view );
+        mViewPager.setAdapter( mAdapter );
     }
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu( Menu menu )
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater( ).inflate( R.menu.menu_main, menu );
 
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected( MenuItem item )
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        int id = item.getItemId( );
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if ( id == R.id.action_settings )
+        {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected( item );
     }
 }
 
