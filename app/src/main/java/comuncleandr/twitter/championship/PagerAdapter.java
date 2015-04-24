@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.ArrayList;
+
 /**
  * Created by Heisenberg on 19.04.2015.
  */
@@ -12,10 +14,10 @@ class PagerAdapter extends FragmentPagerAdapter
     PagerGamersFragment firstPage;
     SecondFragment secondPage;
 
-    public PagerAdapter( FragmentManager fm )
+    public PagerAdapter( FragmentManager fm, ArrayList< Gamer > gamers )
     {
         super( fm );
-        firstPage = new PagerGamersFragment( );
+        firstPage = PagerGamersFragment.newInstance( gamers );
         secondPage = new SecondFragment( );
     }
 

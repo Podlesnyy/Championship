@@ -4,6 +4,6 @@
     <item
         android:id="@+id/action_add_gamer"
         android:icon="@drawable/ic_action_user_add"
-        android:title="Добавить игрока"
+        android:title="@string/add_gamer"
         app:showAsAction="always"/>
 </menu>

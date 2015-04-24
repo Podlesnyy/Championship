@@ -2,20 +2,23 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             android:stretchColumns="0"
              android:id="@+id/gamers"
              tools:context="comuncleandr.twitter.championship.PagerGamersFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
     <TableRow
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Игроки"
-            android:textAlignment="center"
-            android:id="@+id/textView"/>
+            android:text="@string/gamers"
+            android:id="@+id/textView"
+            android:gravity="center_horizontal"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
     </TableRow>
 </TableLayout>

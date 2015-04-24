@@ -1,22 +1,22 @@
 package comuncleandr.twitter.championship;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Bundle;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 /**
@@ -30,6 +30,8 @@ import android.widget.Toast;
 public class PagerGamersFragment extends android.support.v4.app.Fragment
 {
     private OnFragmentInteractionListener mListener;
+    private ArrayList< Gamer > gamers;
+    private TableLayout caseTable;
 
     public PagerGamersFragment()
     {
@@ -40,14 +42,14 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param gamers Parameter 1.
      * @return A new instance of fragment PagerGamersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PagerGamersFragment newInstance( String param1, String param2 )
+    public static PagerGamersFragment newInstance( ArrayList< Gamer > gamers )
     {
         PagerGamersFragment fragment = new PagerGamersFragment( );
+        fragment.gamers = gamers;
         return fragment;
     }
 
@@ -59,19 +61,42 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public void onActivityCreated( @Nullable Bundle savedInstanceState )
+    {
+        super.onActivityCreated( savedInstanceState );
+
+        caseTable = ( TableLayout ) getView( ).findViewById( R.id.gamers );
+        for ( Gamer gamer : gamers )
+        {
+            AddRow( gamer );
+        }
+    }
+
+    private EditText AddRow( Gamer gamer )
+    {
+        TableRow caseRow = new TableRow( getActivity( ) );
+        EditText gamerEditText = new EditText( getActivity( ) );
+        gamerEditText.setMaxLines( 1 );
+        gamerEditText.setText( gamer.getName( ) );
+        caseRow.addView( gamerEditText );
+        caseTable.addView( caseRow, new TableLayout.LayoutParams( TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT ) );
+        return gamerEditText;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected( MenuItem item )
     {
         int id = item.getItemId( );
 
         //noinspection SimplifiableIfStatement
         if ( id == R.id.action_add_gamer )
         {
-            TableLayout caseTable = (TableLayout) getView().findViewById( R.id.gamers );
-            TableRow caseRow = new TableRow(getActivity());
-            EditText name = new EditText(getActivity());
-            //name.setLayoutParams(new LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
-            caseRow.addView(name);
-            caseTable.addView(caseRow,new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
+            Gamer newGamer = new Gamer( );
+            gamers.add( newGamer );
+            EditText editText = AddRow( newGamer );
+            editText.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService( Context.INPUT_METHOD_SERVICE );
+            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
             return true;
         }
 
