@@ -1,10 +1,14 @@
-package comuncleandr.twitter.championship;
+package com.uncleandr.twitter.championship;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
+
+import BO.Gamer;
+import FirstPage.PagerGamersFragment;
 
 /**
  * Created by Heisenberg on 19.04.2015.
@@ -18,7 +22,15 @@ class PagerAdapter extends FragmentPagerAdapter
     {
         super( fm );
         firstPage = PagerGamersFragment.newInstance( gamers );
-        secondPage = new SecondFragment( );
+        secondPage = new SecondFragment();
+    }
+
+
+    @Override
+    public Object instantiateItem( ViewGroup container, int position )
+    {
+
+        return super.instantiateItem( container, position );
     }
 
     @Override
@@ -29,7 +41,7 @@ class PagerAdapter extends FragmentPagerAdapter
             return firstPage;
         }
 
-        return new SecondFragment( );
+        return new SecondFragment();
     }
 
     @Override

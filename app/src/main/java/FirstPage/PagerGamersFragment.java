@@ -1,22 +1,25 @@
-package comuncleandr.twitter.championship;
+package FirstPage;
 
 import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import BO.Gamer;
+import comuncleandr.twitter.championship.R;
 
 
 /**
@@ -31,7 +34,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
 {
     private OnFragmentInteractionListener mListener;
     private ArrayList< Gamer > gamers;
-    private TableLayout caseTable;
+    private ArrayAdapter< Gamer > adapter;
 
     public PagerGamersFragment()
     {
@@ -48,7 +51,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     // TODO: Rename and change types and number of parameters
     public static PagerGamersFragment newInstance( ArrayList< Gamer > gamers )
     {
-        PagerGamersFragment fragment = new PagerGamersFragment( );
+        PagerGamersFragment fragment = new PagerGamersFragment();
         fragment.gamers = gamers;
         return fragment;
     }
@@ -58,6 +61,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     {
         super.onCreate( savedInstanceState );
         setHasOptionsMenu( true );
+        getActivity().setTitle( R.string.gamers );
     }
 
     @Override
@@ -65,42 +69,65 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     {
         super.onActivityCreated( savedInstanceState );
 
-        caseTable = ( TableLayout ) getView( ).findViewById( R.id.gamers );
-        for ( Gamer gamer : gamers )
+        adapter = new ArrayAdapter<>( getActivity(), R.layout.gamers_list_text_view, gamers );
+        ListView listview = ( ListView ) getActivity().findViewById( R.id.listViewGamers );
+        listview.setAdapter( adapter );
+        listview.setOnItemClickListener( new AdapterView.OnItemClickListener()
         {
-            AddRow( gamer );
+            @Override
+            public void onItemClick( AdapterView< ? > parent, View view, int position, long id )
+            {
+                Gamer gamer = ( Gamer ) parent.getItemAtPosition( position );
+                CreateDialog( gamer, false );
+            }
+        } );
+
+        registerForContextMenu( listview );
+    }
+
+    @Override
+    public void onCreateContextMenu( ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo )
+    {
+        if ( v.getId() == R.id.listViewGamers )
+        {
+            AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) menuInfo;
+            menu.setHeaderTitle( gamers.get( info.position ).getName() );
+            menu.add( Menu.NONE, 0, 0, R.string.Remove );
         }
     }
 
-    private EditText AddRow( Gamer gamer )
+    @Override
+    public boolean onContextItemSelected( MenuItem item )
     {
-        TableRow caseRow = new TableRow( getActivity( ) );
-        EditText gamerEditText = new EditText( getActivity( ) );
-        gamerEditText.setMaxLines( 1 );
-        gamerEditText.setText( gamer.getName( ) );
-        caseRow.addView( gamerEditText );
-        caseTable.addView( caseRow, new TableLayout.LayoutParams( TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT ) );
-        return gamerEditText;
+        AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) item.getMenuInfo();
+        adapter.remove( gamers.get( info.position ) );
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected( MenuItem item )
     {
-        int id = item.getItemId( );
+        int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if ( id == R.id.action_add_gamer )
         {
-            Gamer newGamer = new Gamer( );
-            gamers.add( newGamer );
-            EditText editText = AddRow( newGamer );
-            editText.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService( Context.INPUT_METHOD_SERVICE );
-            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+            Gamer gamer = new Gamer();
+            gamer.CreateUUID();
+            CreateDialog( gamer, true );
             return true;
         }
 
         return super.onOptionsItemSelected( item );
+    }
+
+    private void CreateDialog( Gamer gamer, Boolean addToAdapter )
+    {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        GamerDialogResultListener adder = new GamerDialogResultListener( adapter, gamer, addToAdapter );
+        GamerDialogFragment dialog = GamerDialogFragment.newInstance( gamer.getName(), adder );
+        adder.dialogFragment = dialog;
+        dialog.show( fm, "GamerProps" );
     }
 
     @Override
@@ -118,15 +145,6 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed( Uri uri )
-    {
-        if ( mListener != null )
-        {
-            mListener.onFragmentInteraction( uri );
-        }
-    }
-
     @Override
     public void onAttach( Activity activity )
     {
@@ -136,7 +154,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
             //  mListener = (OnFragmentInteractionListener) activity;
         } catch ( ClassCastException e )
         {
-            throw new ClassCastException( activity.toString( )
+            throw new ClassCastException( activity.toString()
                     + " must implement OnFragmentInteractionListener" );
         }
     }
@@ -144,7 +162,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     @Override
     public void onDetach()
     {
-        super.onDetach( );
+        super.onDetach();
         mListener = null;
     }
 

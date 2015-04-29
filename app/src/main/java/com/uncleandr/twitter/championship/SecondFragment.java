@@ -1,4 +1,4 @@
-package comuncleandr.twitter.championship;
+package com.uncleandr.twitter.championship;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,11 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import comuncleandr.twitter.championship.dummy.DummyContent;
+import comuncleandr.twitter.championship.R;
 
 /**
  * A fragment representing a list of Items.
@@ -59,8 +58,8 @@ public class SecondFragment extends Fragment implements AbsListView.OnItemClickL
     // TODO: Rename and change types of parameters
     public static SecondFragment newInstance( String param1, String param2 )
     {
-        SecondFragment fragment = new SecondFragment( );
-        Bundle args = new Bundle( );
+        SecondFragment fragment = new SecondFragment();
+        Bundle args = new Bundle();
         args.putString( ARG_PARAM1, param1 );
         args.putString( ARG_PARAM2, param2 );
         fragment.setArguments( args );
@@ -72,15 +71,11 @@ public class SecondFragment extends Fragment implements AbsListView.OnItemClickL
     {
         super.onCreate( savedInstanceState );
 
-        if ( getArguments( ) != null )
+        if ( getArguments() != null )
         {
-            mParam1 = getArguments( ).getString( ARG_PARAM1 );
-            mParam2 = getArguments( ).getString( ARG_PARAM2 );
+            mParam1 = getArguments().getString( ARG_PARAM1 );
+            mParam2 = getArguments().getString( ARG_PARAM2 );
         }
-
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter< DummyContent.DummyItem >( getActivity( ),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS );
     }
 
     @Override
@@ -108,7 +103,7 @@ public class SecondFragment extends Fragment implements AbsListView.OnItemClickL
             //  mListener = (OnFragmentInteractionListener) activity;
         } catch ( ClassCastException e )
         {
-            throw new ClassCastException( activity.toString( )
+            throw new ClassCastException( activity.toString()
                     + " must implement OnFragmentInteractionListener" );
         }
     }
@@ -116,7 +111,7 @@ public class SecondFragment extends Fragment implements AbsListView.OnItemClickL
     @Override
     public void onDetach()
     {
-        super.onDetach( );
+        super.onDetach();
         mListener = null;
     }
 
@@ -126,9 +121,6 @@ public class SecondFragment extends Fragment implements AbsListView.OnItemClickL
     {
         if ( null != mListener )
         {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction( DummyContent.ITEMS.get( position ).id );
         }
     }
 
@@ -139,7 +131,7 @@ public class SecondFragment extends Fragment implements AbsListView.OnItemClickL
      */
     public void setEmptyText( CharSequence emptyText )
     {
-        View emptyView = mListView.getEmptyView( );
+        View emptyView = mListView.getEmptyView();
 
         if ( emptyView instanceof TextView )
         {

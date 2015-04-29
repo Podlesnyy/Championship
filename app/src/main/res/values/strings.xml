@@ -3,4 +3,9 @@
     <string name="action_settings">Настройки</string>
     <string name="gamers">Игроки</string>
     <string name="add_gamer">Добавить игрока</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Remove">Удалить</string>
+    <string name="json_file_name">gamers.json</string>
 </resources>
