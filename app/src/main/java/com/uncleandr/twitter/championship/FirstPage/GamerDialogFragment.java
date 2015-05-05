@@ -1,4 +1,4 @@
-package FirstPage;
+package com.uncleandr.twitter.championship.FirstPage;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

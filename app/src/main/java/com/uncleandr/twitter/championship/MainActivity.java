@@ -1,61 +1,61 @@
 package com.uncleandr.twitter.championship;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.uncleandr.twitter.championship.BO.Game;
+import com.uncleandr.twitter.championship.DB.DatabaseHelper;
+import com.uncleandr.twitter.championship.DB.DatabaseManager;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.util.List;
 
-import BO.Gamer;
 import comuncleandr.twitter.championship.R;
 
 
 public class MainActivity extends ActionBarActivity
 {
-    ArrayList< Gamer > gamers;
     PagerAdapter mAdapter;
     ViewPager mViewPager;
+    private Game game;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
+        DatabaseManager.getInstance().init( this );
 
-        InitGamers();
-
-        setContentView( R.layout.activity_main );
-
-        mAdapter = new PagerAdapter( getSupportFragmentManager(), gamers );
-        mViewPager = ( ViewPager ) findViewById( R.id.view );
-        mViewPager.setAdapter( mAdapter );
-    }
-
-    private void InitGamers()
-    {
         try
         {
-            String fileContent = ReadGamersFile();
-            Gson gson = new Gson();
-            Type collectionType = new TypeToken< ArrayList< Gamer > >()
-            {
-            }.getType();
-            gamers = gson.fromJson( fileContent, collectionType );
-        } catch ( IOException e )
+            InitGame();
+            setContentView( R.layout.activity_main );
+
+            mAdapter = new PagerAdapter( getSupportFragmentManager(), game );
+            mViewPager = ( ViewPager ) findViewById( R.id.view );
+            mViewPager.setAdapter( mAdapter );
+
+        } catch ( SQLException e )
         {
-            gamers = new ArrayList<>();
+
         }
+
+    }
+
+    private void InitGame() throws SQLException
+    {
+        DatabaseHelper helper = DatabaseManager.getInstance().getHelper();
+        List< Game > games = helper.getGameDao().queryForAll();
+        if ( games.size() == 0 )
+        {
+            Game game = new Game();
+            helper.getGameDao().create( game );
+            games.add( game );
+        }
+
+        game = games.get( 0 );
     }
 
     @Override
@@ -63,9 +63,15 @@ public class MainActivity extends ActionBarActivity
     {
         super.onResume();
 
-        if ( gamers == null )
+        if ( game == null )
         {
-            InitGamers();
+            try
+            {
+                InitGame();
+            } catch ( SQLException e )
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -73,36 +79,9 @@ public class MainActivity extends ActionBarActivity
     protected void onPause()
     {
         super.onPause();
-        Gson gson = new Gson();
-        String json = gson.toJson( gamers );
-        WriteGamersFile( json );
-    }
-
-    private void WriteGamersFile( String json )
-    {
-        try
-        {
-            OutputStreamWriter outputStreamWriter =
-                    new OutputStreamWriter( openFileOutput( getString( R.string.json_file_name ), Context.MODE_PRIVATE ) );
-            outputStreamWriter.write( json );
-            outputStreamWriter.close();
-        } catch ( IOException e )
-        {
-        }
-    }
-
-    String ReadGamersFile() throws IOException
-    {
-        InputStream inputStream = openFileInput( getString( R.string.json_file_name ) );
-        BufferedReader r = new BufferedReader( new InputStreamReader( inputStream ) );
-        StringBuilder total = new StringBuilder();
-        String line;
-
-        while ( ( line = r.readLine() ) != null )
-        {
-            total.append( line );
-        }
-        return total.toString();
+        //Gson gson = new Gson();
+        //String json = gson.toJson( gamers );
+        //WriteGamersFile( json );
     }
 
     @Override

@@ -5,10 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
-import BO.Gamer;
-import FirstPage.PagerGamersFragment;
+import com.uncleandr.twitter.championship.BO.Game;
+import com.uncleandr.twitter.championship.FirstPage.PagerGamersFragment;
 
 /**
  * Created by Heisenberg on 19.04.2015.
@@ -18,10 +16,10 @@ class PagerAdapter extends FragmentPagerAdapter
     PagerGamersFragment firstPage;
     SecondFragment secondPage;
 
-    public PagerAdapter( FragmentManager fm, ArrayList< Gamer > gamers )
+    public PagerAdapter( FragmentManager fm, Game game )
     {
         super( fm );
-        firstPage = PagerGamersFragment.newInstance( gamers );
+        firstPage = PagerGamersFragment.newInstance( game.getGamers() );
         secondPage = new SecondFragment();
     }
 
