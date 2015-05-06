@@ -4,7 +4,7 @@ import android.content.DialogInterface;
 import android.widget.ArrayAdapter;
 
 import com.j256.ormlite.dao.ForeignCollection;
-import com.uncleandr.twitter.championship.BO.Gamer;
+import com.uncleandr.twitter.championship.DAO.Gamer;
 import com.uncleandr.twitter.championship.DB.DatabaseManager;
 
 import java.sql.SQLException;

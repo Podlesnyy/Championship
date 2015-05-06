@@ -1,4 +1,4 @@
-package com.uncleandr.twitter.championship.BO;
+package com.uncleandr.twitter.championship.DAO;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

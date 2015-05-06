@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
-import com.uncleandr.twitter.championship.BO.Game;
+import com.uncleandr.twitter.championship.DAO.Game;
 import com.uncleandr.twitter.championship.FirstPage.PagerGamersFragment;
 
 /**

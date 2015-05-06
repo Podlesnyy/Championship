@@ -1,4 +1,4 @@
-package com.uncleandr.twitter.championship.BO;
+package com.uncleandr.twitter.championship.DAO;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -25,7 +25,7 @@ public class Match
     private int score2;
 
     @DatabaseField
-    private Boolean finished;
+    private MatchStatus status;
 
     @DatabaseField( foreign = true )
     private Game game;
@@ -80,13 +80,13 @@ public class Match
         this.score2 = score2;
     }
 
-    public Boolean getFinished()
+    public MatchStatus getStatus()
     {
-        return finished;
+        return status;
     }
 
-    public void setFinished( Boolean finished )
+    public void setStatus( MatchStatus status )
     {
-        this.finished = finished;
+        this.status = status;
     }
 }
