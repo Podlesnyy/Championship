@@ -2,7 +2,6 @@ package com.uncleandr.twitter.championship.FirstPage;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -12,13 +11,6 @@ import android.widget.EditText;
 
 import comuncleandr.twitter.championship.R;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * create an instance of this fragment.
- */
 public class GamerDialogFragment extends DialogFragment
 {
     private String gamerName;
@@ -33,7 +25,6 @@ public class GamerDialogFragment extends DialogFragment
 
         return fragment;
     }
-
 
     @Override
     public Dialog onCreateDialog( Bundle savedInstanceState )

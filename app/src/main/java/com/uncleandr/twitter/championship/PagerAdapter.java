@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.uncleandr.twitter.championship.DAO.Game;
 import com.uncleandr.twitter.championship.FirstPage.PagerGamersFragment;
+import com.uncleandr.twitter.championship.SecondPage.MatchFragment;
 
 /**
  * Created by Heisenberg on 19.04.2015.
@@ -14,13 +15,13 @@ import com.uncleandr.twitter.championship.FirstPage.PagerGamersFragment;
 class PagerAdapter extends FragmentPagerAdapter
 {
     PagerGamersFragment firstPage;
-    SecondFragment secondPage;
+    MatchFragment secondPage;
 
     public PagerAdapter( FragmentManager fm, Game game )
     {
         super( fm );
         firstPage = PagerGamersFragment.newInstance( game.getGamers() );
-        secondPage = new SecondFragment();
+        secondPage = new MatchFragment().newInstance( game.getMatches() );
     }
 
 
@@ -38,8 +39,7 @@ class PagerAdapter extends FragmentPagerAdapter
         {
             return firstPage;
         }
-
-        return new SecondFragment();
+        return secondPage;
     }
 
     @Override
