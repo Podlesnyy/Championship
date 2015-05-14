@@ -9,9 +9,9 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.uncleandr.twitter.championship.BO.Game;
-import com.uncleandr.twitter.championship.BO.Gamer;
-import com.uncleandr.twitter.championship.BO.Match;
+import com.uncleandr.twitter.championship.DAO.Game;
+import com.uncleandr.twitter.championship.DAO.Gamer;
+import com.uncleandr.twitter.championship.DAO.Match;
 
 /**
  * Created by Heisenberg on 03.05.2015.

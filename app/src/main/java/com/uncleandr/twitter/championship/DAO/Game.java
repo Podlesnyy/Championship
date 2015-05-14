@@ -1,4 +1,4 @@
-package com.uncleandr.twitter.championship.BO;
+package com.uncleandr.twitter.championship.DAO;
 
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
@@ -18,7 +18,7 @@ public class Game
     private ForeignCollection< Gamer > gamers;
 
     @ForeignCollectionField
-    private ForeignCollection< Gamer > matches;
+    private ForeignCollection< Match > matches;
 
     public ForeignCollection< Gamer > getGamers()
     {
@@ -30,12 +30,12 @@ public class Game
         this.gamers = gamers;
     }
 
-    public ForeignCollection< Gamer > getMatches()
+    public ForeignCollection< Match > getMatches()
     {
         return matches;
     }
 
-    public void setMatches( ForeignCollection< Gamer > matches )
+    public void setMatches( ForeignCollection< Match > matches )
     {
         this.matches = matches;
     }

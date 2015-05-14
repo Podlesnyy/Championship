@@ -18,6 +18,7 @@ android {
             zipAlignEnabled true
         }
     }
+    sourceSets { main { java.srcDirs = [ 'src/main/java' ] } }
 }
 
 dependencies {
