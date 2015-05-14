@@ -17,7 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.j256.ormlite.dao.ForeignCollection;
-import com.uncleandr.twitter.championship.BO.Gamer;
+import com.uncleandr.twitter.championship.DAO.Gamer;
 import com.uncleandr.twitter.championship.DB.DatabaseManager;
 
 import java.sql.SQLException;
@@ -194,7 +194,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     public interface OnFragmentInteractionListener
     {
         // TODO: Update argument type and name
-        public void onFragmentInteraction( Uri uri );
+        void onFragmentInteraction( Uri uri );
     }
 
 }

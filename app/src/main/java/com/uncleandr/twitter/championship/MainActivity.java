@@ -6,7 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.uncleandr.twitter.championship.BO.Game;
+import com.uncleandr.twitter.championship.DAO.Game;
 import com.uncleandr.twitter.championship.DB.DatabaseHelper;
 import com.uncleandr.twitter.championship.DB.DatabaseManager;
 
@@ -26,7 +26,7 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
-        DatabaseManager.getInstance().init( this );
+        DatabaseManager.init( this );
 
         try
         {
