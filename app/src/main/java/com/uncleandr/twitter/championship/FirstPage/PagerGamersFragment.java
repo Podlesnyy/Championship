@@ -51,6 +51,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
         super.onCreate( savedInstanceState );
         setHasOptionsMenu( true );
         getActivity().setTitle( R.string.gamers );
+        setRetainInstance( true );
     }
 
     @Override
