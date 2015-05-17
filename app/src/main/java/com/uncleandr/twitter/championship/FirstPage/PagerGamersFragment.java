@@ -1,7 +1,6 @@
 package com.uncleandr.twitter.championship.FirstPage;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -25,10 +24,8 @@ import java.util.ArrayList;
 
 import comuncleandr.twitter.championship.R;
 
-
 public class PagerGamersFragment extends android.support.v4.app.Fragment
 {
-    private OnFragmentInteractionListener mListener;
     private ForeignCollection< Gamer > gamers;
     private ArrayAdapter< Gamer > adapter;
     private ArrayList< Gamer > alGamers;
@@ -50,7 +47,6 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     {
         super.onCreate( savedInstanceState );
         setHasOptionsMenu( true );
-        getActivity().setTitle( R.string.gamers );
         setRetainInstance( true );
     }
 
@@ -72,7 +68,6 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
                 CreateDialog( gamer, false );
             }
         } );
-
         registerForContextMenu( listview );
     }
 
@@ -109,8 +104,6 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     public boolean onOptionsItemSelected( MenuItem item )
     {
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if ( id == R.id.action_add_gamer )
         {
             Gamer gamer = new Gamer();
@@ -140,45 +133,17 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     public void onCreateOptionsMenu( Menu menu, MenuInflater inflater )
     {
         inflater.inflate( R.menu.menu_gamers, menu );
-
     }
 
     @Override
     public void onAttach( Activity activity )
     {
         super.onAttach( activity );
-        try
-        {
-            //  mListener = (OnFragmentInteractionListener) activity;
-        }
-        catch ( ClassCastException e )
-        {
-            throw new ClassCastException( activity.toString()
-                    + " must implement OnFragmentInteractionListener" );
-        }
     }
 
     @Override
     public void onDetach()
     {
         super.onDetach();
-        mListener = null;
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener
-    {
-        // TODO: Update argument type and name
-        void onFragmentInteraction( Uri uri );
-    }
-
 }

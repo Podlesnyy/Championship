@@ -43,7 +43,8 @@ public class GamerDialogResultListener implements DialogInterface.OnClickListene
             try
             {
                 DatabaseManager.getInstance().getHelper().getGamerDao().create( gamer );
-            } catch ( SQLException e )
+            }
+            catch ( SQLException e )
             {
                 e.printStackTrace();
             }
@@ -56,7 +57,8 @@ public class GamerDialogResultListener implements DialogInterface.OnClickListene
             try
             {
                 DatabaseManager.getInstance().getHelper().getGamerDao().update( gamer );
-            } catch ( SQLException e )
+            }
+            catch ( SQLException e )
             {
                 e.printStackTrace();
             }

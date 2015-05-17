@@ -89,4 +89,10 @@ public class Match
     {
         this.status = status;
     }
+
+    @Override
+    public String toString()
+    {
+        return "123";//gamer1.toString() + " : " + gamer2.toString();
+    }
 }

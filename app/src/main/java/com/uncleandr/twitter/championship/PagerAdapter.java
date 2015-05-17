@@ -7,39 +7,34 @@ import android.view.ViewGroup;
 
 import com.uncleandr.twitter.championship.DAO.Game;
 import com.uncleandr.twitter.championship.FirstPage.PagerGamersFragment;
-import com.uncleandr.twitter.championship.SecondPage.MatchFragment;
+import com.uncleandr.twitter.championship.SecondPage.PagerMatchesFragment;
+
+import java.util.ArrayList;
 
 /**
  * Created by Heisenberg on 19.04.2015.
  */
 class PagerAdapter extends FragmentPagerAdapter
 {
-    PagerGamersFragment firstPage;
-    MatchFragment secondPage;
+    private ArrayList< Fragment > fragments = new ArrayList<>();
 
     public PagerAdapter( FragmentManager fm, Game game )
     {
         super( fm );
-        firstPage = PagerGamersFragment.newInstance( game.getGamers() );
-        secondPage = new MatchFragment().newInstance( game.getMatches() );
+        fragments.add( PagerGamersFragment.newInstance( game.getGamers() ) );
+        fragments.add( PagerMatchesFragment.newInstance( game.getMatches() ) );
     }
-
 
     @Override
     public Object instantiateItem( ViewGroup container, int position )
     {
-
         return super.instantiateItem( container, position );
     }
 
     @Override
     public Fragment getItem( int i )
     {
-        if ( i == 0 )
-        {
-            return firstPage;
-        }
-        return secondPage;
+        return fragments.get( i );
     }
 
     @Override

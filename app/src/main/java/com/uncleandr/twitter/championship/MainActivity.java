@@ -33,10 +33,37 @@ public class MainActivity extends ActionBarActivity
             mAdapter = new PagerAdapter( getSupportFragmentManager(), game );
             mViewPager = ( ViewPager ) findViewById( R.id.view );
             mViewPager.setAdapter( mAdapter );
+            SetPageChangeListener();
         }
         catch ( SQLException e )
         {
         }
+    }
+
+    private void SetPageChangeListener()
+    {
+        mViewPager.setOnPageChangeListener( new ViewPager.OnPageChangeListener()
+        {
+            @Override
+            public void onPageScrolled( int position, float positionOffset, int positionOffsetPixels )
+            {
+            }
+            @Override
+            public void onPageSelected( int position )
+            {
+                switch ( position )
+                {
+                    case 0:
+                        setTitle( R.string.gamers );
+                    case 1:
+                        setTitle( R.string.matches );
+                }
+            }
+            @Override
+            public void onPageScrollStateChanged( int state )
+            {
+            }
+        } );
     }
 
     private void InitGame() throws SQLException
@@ -57,7 +84,6 @@ public class MainActivity extends ActionBarActivity
     public void onResume()
     {
         super.onResume();
-
         if ( game == null )
         {
             try
@@ -75,9 +101,6 @@ public class MainActivity extends ActionBarActivity
     protected void onPause()
     {
         super.onPause();
-        //Gson gson = new Gson();
-        //String json = gson.toJson( gamers );
-        //WriteGamersFile( json );
     }
 
     @Override
@@ -91,13 +114,10 @@ public class MainActivity extends ActionBarActivity
     public boolean onOptionsItemSelected( MenuItem item )
     {
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if ( id == R.id.action_settings )
         {
             return true;
         }
-
         return super.onOptionsItemSelected( item );
     }
 }
