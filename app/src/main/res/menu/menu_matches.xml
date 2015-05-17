@@ -3,7 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_add_match"
-        android:icon="@drawable/abc_ic_clear_mtrl_alpha"
+        android:icon="@drawable/ic_action_add"
         android:title="@string/add_match"
         app:showAsAction="always"/>
 </menu>
