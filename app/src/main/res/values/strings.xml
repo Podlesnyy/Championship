@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Championship</string>
     <string name="action_settings">Настройки</string>
+    <string name="gamer">Игрок</string>
     <string name="gamers">Игроки</string>
     <string name="add_gamer">Добавить игрока</string>
+    <string name="match">Матч</string>
     <string name="matches">Матчи</string>
     <string name="add_match">Добавить матч</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

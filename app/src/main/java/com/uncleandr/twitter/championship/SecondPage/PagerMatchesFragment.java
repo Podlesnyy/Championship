@@ -3,35 +3,33 @@ package com.uncleandr.twitter.championship.SecondPage;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.j256.ormlite.dao.ForeignCollection;
-import com.uncleandr.twitter.championship.DAO.Gamer;
 import com.uncleandr.twitter.championship.DAO.Match;
 
 import java.util.ArrayList;
 
 import comuncleandr.twitter.championship.R;
 
-public class PagerMatchesFragment extends Fragment implements AbsListView.OnItemClickListener
+public class PagerMatchesFragment extends Fragment
 {
-
-    private OnFragmentInteractionListener mListener;
     private ForeignCollection< Match > matches;
     private ArrayAdapter< Match > adapter;
     private ArrayList< Match > allMatches;
 
     public PagerMatchesFragment()
     {
+        // Required empty public constructor
     }
 
     public static PagerMatchesFragment newInstance( ForeignCollection< Match > matches )
@@ -64,7 +62,26 @@ public class PagerMatchesFragment extends Fragment implements AbsListView.OnItem
         adapter = new ArrayAdapter<>( getActivity(), R.layout.matches_list_text_view, allMatches );
         ListView listview = ( ListView ) getActivity().findViewById( R.id.listViewMatches );
         listview.setAdapter( adapter );
+        listview.setOnItemClickListener( new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick( AdapterView< ? > parent, View view, int position, long id )
+            {
+                Match match = ( Match ) parent.getItemAtPosition( position );
+                CreateDialog( match, false );
+            }
+        } );
         registerForContextMenu( listview );
+    }
+
+    private void CreateDialog( Match match, Boolean addToAdapter )
+    {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        MatchDialogResultListener adder = new MatchDialogResultListener( adapter, matches, match,
+                addToAdapter );
+        MatchDialogFragment dialog = MatchDialogFragment.newInstance( match.getGamer1(), match.getGamer2(), adder );
+        adder.dialogFragment = dialog;
+        dialog.show( fm, "MatchPrors" );
     }
 
     @Override
@@ -77,7 +94,6 @@ public class PagerMatchesFragment extends Fragment implements AbsListView.OnItem
     public void onDetach()
     {
         super.onDetach();
-        mListener = null;
     }
 
     @Override
@@ -93,26 +109,9 @@ public class PagerMatchesFragment extends Fragment implements AbsListView.OnItem
         if ( id == R.id.action_add_match )
         {
             Match match = new Match();
-            matches.add( match );
-            adapter.add( match );
+            CreateDialog( match, true );
             return true;
         }
         return super.onOptionsItemSelected( item );
     }
-
-
-    @Override
-    public void onItemClick( AdapterView< ? > parent, View view, int position, long id )
-    {
-        if ( null != mListener )
-        {
-        }
-    }
-
-    public interface OnFragmentInteractionListener
-    {
-        // TODO: Update argument type and name
-        void onFragmentInteraction( String id );
-    }
-
 }

@@ -34,7 +34,7 @@ public class GamerDialogFragment extends DialogFragment
 
         gamerNameEdit = ( EditText ) view.findViewById( R.id.editTextGamerName );
         gamerNameEdit.setText( gamerName );
-        Dialog dlg = new AlertDialog.Builder( getActivity() ).setTitle( "Игрок" ).setView( view ).setPositiveButton( android.R.string.ok,
+        Dialog dlg = new AlertDialog.Builder( getActivity() ).setTitle( R.string.gamer ).setView( view ).setPositiveButton( android.R.string.ok,
                 onOk ).create();
         dlg.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
         return dlg;
