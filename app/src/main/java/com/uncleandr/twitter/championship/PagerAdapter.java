@@ -21,8 +21,8 @@ class PagerAdapter extends FragmentPagerAdapter
     public PagerAdapter( FragmentManager fm, Game game )
     {
         super( fm );
-        fragments.add( PagerGamersFragment.newInstance( game.getGamers() ) );
-        fragments.add( PagerMatchesFragment.newInstance( game.getMatches() ) );
+        fragments.add( PagerGamersFragment.newInstance( game ) );
+        fragments.add( PagerMatchesFragment.newInstance( game ) );
     }
 
     @Override

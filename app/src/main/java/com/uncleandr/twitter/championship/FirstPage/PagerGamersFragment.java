@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.j256.ormlite.dao.ForeignCollection;
+import com.uncleandr.twitter.championship.DAO.Game;
 import com.uncleandr.twitter.championship.DAO.Gamer;
 import com.uncleandr.twitter.championship.DB.DatabaseManager;
 
@@ -26,20 +27,25 @@ import comuncleandr.twitter.championship.R;
 
 public class PagerGamersFragment extends android.support.v4.app.Fragment
 {
-    private ForeignCollection< Gamer > gamers;
     private ArrayAdapter< Gamer > adapter;
-    private ArrayList< Gamer > alGamers;
+    private ArrayList< Gamer > allGamers;
+    private Game game;
 
     public PagerGamersFragment()
     {
         // Required empty public constructor
     }
 
-    public static PagerGamersFragment newInstance( ForeignCollection< Gamer > gamers )
+    public static PagerGamersFragment newInstance( Game game )
     {
         PagerGamersFragment fragment = new PagerGamersFragment();
-        fragment.gamers = gamers;
+        fragment.game = game;
         return fragment;
+    }
+
+    private ForeignCollection< Gamer > getGamers()
+    {
+        return game.getGamers();
     }
 
     @Override
@@ -55,8 +61,8 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     {
         super.onActivityCreated( savedInstanceState );
 
-        alGamers = new ArrayList<>( gamers );
-        adapter = new ArrayAdapter<>( getActivity(), R.layout.gamers_list_text_view, alGamers );
+        allGamers = new ArrayList<>( getGamers() );
+        adapter = new ArrayAdapter<>( getActivity(), R.layout.gamers_list_text_view, allGamers );
         ListView listview = ( ListView ) getActivity().findViewById( R.id.listViewGamers );
         listview.setAdapter( adapter );
         listview.setOnItemClickListener( new AdapterView.OnItemClickListener()
@@ -65,7 +71,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
             public void onItemClick( AdapterView< ? > parent, View view, int position, long id )
             {
                 Gamer gamer = ( Gamer ) parent.getItemAtPosition( position );
-                CreateDialog( gamer, false );
+                CreateDialog( game, gamer, false );
             }
         } );
         registerForContextMenu( listview );
@@ -77,7 +83,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
         if ( v.getId() == R.id.listViewGamers )
         {
             AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) menuInfo;
-            menu.setHeaderTitle( alGamers.get( info.position ).getName() );
+            menu.setHeaderTitle( allGamers.get( info.position ).getName() );
             menu.add( Menu.NONE, 0, 0, R.string.Remove );
         }
     }
@@ -86,7 +92,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     public boolean onContextItemSelected( MenuItem item )
     {
         AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) item.getMenuInfo();
-        Gamer gamer = alGamers.get( info.position );
+        Gamer gamer = allGamers.get( info.position );
         adapter.remove( gamer );
         try
         {
@@ -96,7 +102,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
         {
             e.printStackTrace();
         }
-        gamers.remove( gamer );
+        getGamers().remove( gamer );
         return true;
     }
 
@@ -107,16 +113,16 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
         if ( id == R.id.action_add_gamer )
         {
             Gamer gamer = new Gamer();
-            CreateDialog( gamer, true );
+            CreateDialog( game, gamer, true );
             return true;
         }
         return super.onOptionsItemSelected( item );
     }
 
-    private void CreateDialog( Gamer gamer, Boolean addToAdapter )
+    private void CreateDialog( Game game, Gamer gamer, Boolean addToAdapter )
     {
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        GamerDialogResultListener adder = new GamerDialogResultListener( adapter, gamers, gamer, addToAdapter );
+        GamerDialogResultListener adder = new GamerDialogResultListener( adapter, game, gamer, addToAdapter );
         GamerDialogFragment dialog = GamerDialogFragment.newInstance( gamer.getName(), adder );
         adder.dialogFragment = dialog;
         dialog.show( fm, "GamerProps" );

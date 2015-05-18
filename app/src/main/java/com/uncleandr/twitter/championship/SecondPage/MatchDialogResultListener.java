@@ -8,7 +8,6 @@ import com.j256.ormlite.dao.ForeignCollection;
 import com.uncleandr.twitter.championship.DAO.Gamer;
 import com.uncleandr.twitter.championship.DAO.Match;
 import com.uncleandr.twitter.championship.DB.DatabaseManager;
-import com.uncleandr.twitter.championship.FirstPage.GamerDialogFragment;
 
 import java.sql.SQLException;
 

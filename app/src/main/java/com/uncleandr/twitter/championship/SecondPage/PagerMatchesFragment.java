@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.j256.ormlite.dao.ForeignCollection;
+import com.uncleandr.twitter.championship.DAO.Game;
 import com.uncleandr.twitter.championship.DAO.Match;
 
 import java.util.ArrayList;
@@ -23,20 +24,25 @@ import comuncleandr.twitter.championship.R;
 
 public class PagerMatchesFragment extends Fragment
 {
-    private ForeignCollection< Match > matches;
     private ArrayAdapter< Match > adapter;
     private ArrayList< Match > allMatches;
+    private Game game;
 
     public PagerMatchesFragment()
     {
         // Required empty public constructor
     }
 
-    public static PagerMatchesFragment newInstance( ForeignCollection< Match > matches )
+    public static PagerMatchesFragment newInstance( Game game )
     {
         PagerMatchesFragment fragment = new PagerMatchesFragment();
-        fragment.matches = matches;
+        fragment.game = game;
         return fragment;
+    }
+
+    private ForeignCollection< Match > getMatches()
+    {
+        return game.getMatches();
     }
 
     @Override
@@ -58,7 +64,7 @@ public class PagerMatchesFragment extends Fragment
     public void onActivityCreated( Bundle savedInstanceState )
     {
         super.onActivityCreated( savedInstanceState );
-        allMatches = new ArrayList<>( matches );
+        allMatches = new ArrayList<>( getMatches() );
         adapter = new ArrayAdapter<>( getActivity(), R.layout.matches_list_text_view, allMatches );
         ListView listview = ( ListView ) getActivity().findViewById( R.id.listViewMatches );
         listview.setAdapter( adapter );
@@ -77,9 +83,9 @@ public class PagerMatchesFragment extends Fragment
     private void CreateDialog( Match match, Boolean addToAdapter )
     {
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        MatchDialogResultListener adder = new MatchDialogResultListener( adapter, matches, match,
+        MatchDialogResultListener adder = new MatchDialogResultListener( adapter, getMatches(), match,
                 addToAdapter );
-        MatchDialogFragment dialog = MatchDialogFragment.newInstance( match.getGamer1(), match.getGamer2(), adder );
+        MatchDialogFragment dialog = MatchDialogFragment.newInstance( game, match.getGamer1(), match.getGamer2(), adder );
         adder.dialogFragment = dialog;
         dialog.show( fm, "MatchPrors" );
     }

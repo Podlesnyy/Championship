@@ -3,7 +3,7 @@ package com.uncleandr.twitter.championship.FirstPage;
 import android.content.DialogInterface;
 import android.widget.ArrayAdapter;
 
-import com.j256.ormlite.dao.ForeignCollection;
+import com.uncleandr.twitter.championship.DAO.Game;
 import com.uncleandr.twitter.championship.DAO.Gamer;
 import com.uncleandr.twitter.championship.DB.DatabaseManager;
 
@@ -16,14 +16,14 @@ public class GamerDialogResultListener implements DialogInterface.OnClickListene
 {
     GamerDialogFragment dialogFragment;
     private ArrayAdapter< Gamer > adapter;
-    private ForeignCollection< Gamer > gamers;
+    private Game game;
     private Gamer gamer;
     private Boolean addToAdapter;
 
-    public GamerDialogResultListener( ArrayAdapter< Gamer > adapter, ForeignCollection< Gamer > gamers, Gamer gamer, Boolean addToAdapter )
+    public GamerDialogResultListener( ArrayAdapter< Gamer > adapter, Game game, Gamer gamer, Boolean addToAdapter )
     {
         this.adapter = adapter;
-        this.gamers = gamers;
+        this.game = game;
         this.gamer = gamer;
         this.addToAdapter = addToAdapter;
     }
@@ -48,7 +48,7 @@ public class GamerDialogResultListener implements DialogInterface.OnClickListene
             {
                 e.printStackTrace();
             }
-            gamers.add( gamer );
+            game.getGamers().add( gamer );
             adapter.add( gamer );
         }
         else

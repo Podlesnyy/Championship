@@ -93,6 +93,6 @@ public class Match
     @Override
     public String toString()
     {
-        return "123";//gamer1.toString() + " : " + gamer2.toString();
+        return String.format( "%1$s versus %2$s", gamer1 == null ? "Gamer 1" : gamer1.toString(), gamer2 == null ? "Gamer 2" : gamer2.toString() );
     }
 }
