@@ -1,5 +1,7 @@
 package com.uncleandr.twitter.championship;
 
+import android.app.ActionBar;
+import android.common.view.SlidingTabLayout;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -21,6 +23,7 @@ public class MainActivity extends ActionBarActivity
     PagerAdapter mAdapter;
     ViewPager mViewPager;
     private Game game;
+    private SlidingTabLayout mSlidingTabLayout;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -31,12 +34,16 @@ public class MainActivity extends ActionBarActivity
         try
         {
             InitGame();
+            final ActionBar actionBar = getActionBar();
+
             setContentView( R.layout.activity_main );
 
-            mAdapter = new PagerAdapter( getSupportFragmentManager(), game );
+            mAdapter = new PagerAdapter( getSupportFragmentManager(), game, getApplicationContext());
             mViewPager = ( ViewPager ) findViewById( R.id.view );
             mViewPager.setAdapter( mAdapter );
 
+            mSlidingTabLayout = (SlidingTabLayout ) findViewById( R.id.sliding_tabs );
+            mSlidingTabLayout.setViewPager( mViewPager );
         } catch ( SQLException e )
         {
 
@@ -52,7 +59,7 @@ public class MainActivity extends ActionBarActivity
         {
             Game game = new Game();
             helper.getGameDao().create( game );
-            games.add( game );
+            games = helper.getGameDao().queryForAll();
         }
 
         game = games.get( 0 );

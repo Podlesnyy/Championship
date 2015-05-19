@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Чемпионат</string>
+    <string name="action_settings">Настройки</string>
+    <string name="gamers">Игроки</string>
+    <string name="add_gamer">Добавить игрока</string>
+    <string name="remove">Удалить</string>
+    <string name="matches">Матчи</string>
+    <string name="enter_gamer_name">Имя игрока</string>
+</resources>
