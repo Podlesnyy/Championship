@@ -92,6 +92,8 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     public boolean onContextItemSelected( MenuItem item )
     {
         AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) item.getMenuInfo();
+        if ( info.targetView.getId() != R.id.listViewGamers )
+        { return false; }
         Gamer gamer = allGamers.get( info.position );
         adapter.remove( gamer );
         try

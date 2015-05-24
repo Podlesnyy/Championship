@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,8 +17,11 @@ import android.widget.ListView;
 
 import com.j256.ormlite.dao.ForeignCollection;
 import com.uncleandr.twitter.championship.DAO.Game;
+import com.uncleandr.twitter.championship.DAO.Gamer;
 import com.uncleandr.twitter.championship.DAO.Match;
+import com.uncleandr.twitter.championship.DB.DatabaseManager;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import comuncleandr.twitter.championship.R;
@@ -119,5 +123,36 @@ public class PagerMatchesFragment extends Fragment
             return true;
         }
         return super.onOptionsItemSelected( item );
+    }
+
+    @Override
+    public void onCreateContextMenu( ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo )
+    {
+        if ( v.getId() == R.id.listViewMatches )
+        {
+            AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) menuInfo;
+            menu.setHeaderTitle( allMatches.get( info.position ).toString() );
+            menu.add( Menu.NONE, 0, 0, R.string.remove );
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected( MenuItem item )
+    {
+        AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) item.getMenuInfo();
+        if ( info.targetView.getId() != R.id.listViewMatches )
+        { return false; }
+        Match match = allMatches.get( info.position );
+        adapter.remove( match );
+        try
+        {
+            DatabaseManager.getInstance().getHelper().getMatchDao().delete( match );
+        }
+        catch ( SQLException e )
+        {
+            e.printStackTrace();
+        }
+        getMatches().remove( match );
+        return true;
     }
 }
