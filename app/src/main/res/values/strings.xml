@@ -1,13 +1,14 @@
 <resources>
+    <string name="remove">Remove</string>
+    <string name="enter_gamer_name">Gamer name</string>
     <string name="app_name">Championship</string>
-    <string name="action_settings">Настройки</string>
-    <string name="gamer">Игрок</string>
-    <string name="gamers">Игроки</string>
-    <string name="add_gamer">Добавить игрока</string>
-    <string name="match">Матч</string>
-    <string name="matches">Матчи</string>
-    <string name="add_match">Добавить матч</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="Remove">Удалить</string>
+    <string name="action_settings">���������</string>
+    <string name="gamer">�����</string>
+    <string name="gamers">������</string>
+    <string name="add_gamer">�������� ������</string>
+    <string name="match">����   </string>
+    <string name="matches">�����</string>
+    <string name="add_match">�������� ����</string>
+    <string name="Remove">�������</string>
     <string name="json_file_name">gamers.json</string>
 </resources>

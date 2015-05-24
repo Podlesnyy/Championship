@@ -8,11 +8,12 @@
         android:id="@+id/gamer1Spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:spinnerMode="dialog"/>
 
     <Spinner
         android:id="@+id/gamer2Spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"/>
 
 </LinearLayout>

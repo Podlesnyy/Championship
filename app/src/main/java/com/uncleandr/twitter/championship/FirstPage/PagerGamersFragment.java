@@ -84,7 +84,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
         {
             AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) menuInfo;
             menu.setHeaderTitle( allGamers.get( info.position ).getName() );
-            menu.add( Menu.NONE, 0, 0, R.string.Remove );
+            menu.add( Menu.NONE, 0, 0, R.string.remove );
         }
     }
 
