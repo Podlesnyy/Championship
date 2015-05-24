@@ -3,6 +3,7 @@ package com.uncleandr.twitter.championship.Controllers;
 import com.uncleandr.twitter.championship.DAO.Game;
 import com.uncleandr.twitter.championship.DAO.Gamer;
 import com.uncleandr.twitter.championship.DAO.Match;
+import com.uncleandr.twitter.championship.DAO.MatchStatus;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,6 +15,74 @@ import java.util.TreeMap;
  */
 public class GameController
 {
+    public Match GetNextMatch( ArrayList< Match > previousMatches, Collection< Gamer > gamers )
+    {
+        if (gamers == null || gamers.size() < 2) {
+            //throw new Exception
+        }
+        Integer maxMatchesOfGamer = gamers.size()-1;
+
+        Gamer firstGamer = null;
+        Gamer secondGamer = null;
+        Integer minWeight = Integer.MAX_VALUE;
+        TreeMap< Gamer, Integer > candidatesForPlay = new TreeMap<>();
+        for ( Gamer gamer : gamers )
+        {
+            Integer weight = 0;
+            Integer playedMatches = 0;
+            if (previousMatches != null)
+                for ( Match match : previousMatches ) {
+                    if (match.getGamer1().equals( gamer ) || match.getGamer2().equals( gamer ))
+                    {
+                        playedMatches++;
+                        weight+=previousMatches.indexOf( match );
+                    }
+                }
+
+            if (playedMatches<maxMatchesOfGamer)
+            {
+                candidatesForPlay.put( gamer, weight );
+                if (weight<minWeight){
+                    minWeight = weight;
+                    firstGamer = gamer;
+                }
+            }
+        }
+        if (candidatesForPlay.size()<=1)
+            return null;
+
+        candidatesForPlay.remove( firstGamer );
+        while(secondGamer==null)
+        {
+            if (candidatesForPlay.isEmpty()) {
+                //throw new exception
+            }
+            minWeight = Integer.MAX_VALUE;
+            for ( Gamer gamer : candidatesForPlay.keySet() )
+            {
+                if (candidatesForPlay.get( gamer )<minWeight){
+                    minWeight = candidatesForPlay.get( gamer );
+                    secondGamer = gamer;
+                }
+            }
+
+            if (previousMatches != null)
+                for ( Match match : previousMatches ) {
+                    if (match.getGamer1().equals( firstGamer ) && match.getGamer2().equals( secondGamer ) || match.getGamer2().equals( firstGamer ) && match.getGamer1().equals( secondGamer ))
+                    {
+                        candidatesForPlay.remove( secondGamer );
+                        secondGamer = null;
+                        break;
+                    }
+                }
+        }
+        Match match = new Match();
+        match.setGamer1( firstGamer );
+        match.setGamer2( secondGamer );
+        return match;
+    }
+
+
     public ArrayList< Result > getWinners( Game game )
     {
         Collection< Gamer > gamersCollection = game.getGamers();
