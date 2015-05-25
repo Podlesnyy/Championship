@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 
 import com.uncleandr.twitter.championship.DAO.Game;
 import com.uncleandr.twitter.championship.FirstPage.PagerGamersFragment;
+import com.uncleandr.twitter.championship.SecondPage.PagerMatchesFragment;
+
+import java.util.ArrayList;
 
 import comuncleandr.twitter.championship.R;
 
@@ -16,41 +19,34 @@ import comuncleandr.twitter.championship.R;
  */
 class PagerAdapter extends FragmentPagerAdapter
 {
-    PagerGamersFragment firstPage;
-    SecondFragment secondPage;
+    ArrayList< Fragment > fragments = new ArrayList<>();
     private Context context;
 
     public PagerAdapter( FragmentManager fm, Game game, Context context )
     {
         super( fm );
         this.context = context;
-        firstPage = PagerGamersFragment.newInstance( game.getGamers() );
-        secondPage = new SecondFragment();
+        fragments.add( PagerGamersFragment.newInstance( game ) );
+        fragments.add( PagerMatchesFragment.newInstance( game ) );
     }
 
 
     @Override
     public Object instantiateItem( ViewGroup container, int position )
     {
-
         return super.instantiateItem( container, position );
     }
 
     @Override
     public Fragment getItem( int i )
     {
-        if ( i == 0 )
-        {
-            return firstPage;
-        }
-
-        return new SecondFragment();
+        return fragments.get( i );
     }
 
     @Override
     public int getCount()
     {
-        return 2;
+        return fragments.size();
     }
 
     @Override

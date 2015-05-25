@@ -2,7 +2,6 @@ package com.uncleandr.twitter.championship.FirstPage;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -12,13 +11,6 @@ import android.widget.EditText;
 
 import comuncleandr.twitter.championship.R;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * create an instance of this fragment.
- */
 public class GamerDialogFragment extends DialogFragment
 {
     private String gamerName;
@@ -34,7 +26,6 @@ public class GamerDialogFragment extends DialogFragment
         return fragment;
     }
 
-
     @Override
     public Dialog onCreateDialog( Bundle savedInstanceState )
     {
@@ -43,7 +34,7 @@ public class GamerDialogFragment extends DialogFragment
 
         gamerNameEdit = ( EditText ) view.findViewById( R.id.editTextGamerName );
         gamerNameEdit.setText( gamerName );
-        Dialog dlg = new AlertDialog.Builder( getActivity() ).setTitle( "Игрок" ).setView( view ).setPositiveButton( android.R.string.ok,
+        Dialog dlg = new AlertDialog.Builder( getActivity() ).setTitle( R.string.gamer ).setView( view ).setPositiveButton( android.R.string.ok,
                 onOk ).create();
         dlg.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
         return dlg;

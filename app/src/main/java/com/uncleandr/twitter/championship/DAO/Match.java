@@ -30,6 +30,9 @@ public class Match
     @DatabaseField( foreign = true )
     private Game game;
 
+    @DatabaseField
+    private String name;
+
     public int getId()
     {
         return id;
@@ -48,6 +51,7 @@ public class Match
     public void setGamer1( Gamer gamer1 )
     {
         this.gamer1 = gamer1;
+        updateName();
     }
 
     public Gamer getGamer2()
@@ -58,6 +62,7 @@ public class Match
     public void setGamer2( Gamer gamer2 )
     {
         this.gamer2 = gamer2;
+        updateName();
     }
 
     public int getScore1()
@@ -88,5 +93,16 @@ public class Match
     public void setStatus( MatchStatus status )
     {
         this.status = status;
+    }
+
+    private void updateName()
+    {
+        name = String.format( "%1$s versus %2$s", gamer1 == null ? "Gamer 1" : gamer1.toString(), gamer2 == null ? "Gamer 2" : gamer2.toString() );
+    }
+
+    @Override
+    public String toString()
+    {
+        return name;
     }
 }

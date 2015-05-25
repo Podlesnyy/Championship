@@ -1,7 +1,6 @@
 package com.uncleandr.twitter.championship.FirstPage;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.j256.ormlite.dao.ForeignCollection;
+import com.uncleandr.twitter.championship.DAO.Game;
 import com.uncleandr.twitter.championship.DAO.Gamer;
 import com.uncleandr.twitter.championship.DB.DatabaseManager;
 
@@ -25,40 +25,27 @@ import java.util.ArrayList;
 
 import comuncleandr.twitter.championship.R;
 
-
-/**
- * A simple {@link android.support.v4.app.Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PagerGamersFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PagerGamersFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PagerGamersFragment extends android.support.v4.app.Fragment
 {
-    private OnFragmentInteractionListener mListener;
-    private ForeignCollection< Gamer > gamers;
     private ArrayAdapter< Gamer > adapter;
-    private ArrayList< Gamer > alGamers;
+    private ArrayList< Gamer > allGamers;
+    private Game game;
 
     public PagerGamersFragment()
     {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param gamers Parameter 1.
-     * @return A new instance of fragment PagerGamersFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PagerGamersFragment newInstance( ForeignCollection< Gamer > gamers )
+    public static PagerGamersFragment newInstance( Game game )
     {
         PagerGamersFragment fragment = new PagerGamersFragment();
-        fragment.gamers = gamers;
+        fragment.game = game;
         return fragment;
+    }
+
+    private ForeignCollection< Gamer > getGamers()
+    {
+        return game.getGamers();
     }
 
     @Override
@@ -74,8 +61,8 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     {
         super.onActivityCreated( savedInstanceState );
 
-        alGamers = new ArrayList<>( gamers );
-        adapter = new ArrayAdapter<>( getActivity(), R.layout.gamers_list_text_view, alGamers );
+        allGamers = new ArrayList<>( getGamers() );
+        adapter = new ArrayAdapter<>( getActivity(), R.layout.gamers_list_text_view, allGamers );
         ListView listview = ( ListView ) getActivity().findViewById( R.id.listViewGamers );
         listview.setAdapter( adapter );
         listview.setOnItemClickListener( new AdapterView.OnItemClickListener()
@@ -84,10 +71,9 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
             public void onItemClick( AdapterView< ? > parent, View view, int position, long id )
             {
                 Gamer gamer = ( Gamer ) parent.getItemAtPosition( position );
-                CreateDialog( gamer, false );
+                CreateDialog( game, gamer, false );
             }
         } );
-
         registerForContextMenu( listview );
     }
 
@@ -97,7 +83,7 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
         if ( v.getId() == R.id.listViewGamers )
         {
             AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) menuInfo;
-            menu.setHeaderTitle( alGamers.get( info.position ).getName() );
+            menu.setHeaderTitle( allGamers.get( info.position ).getName() );
             menu.add( Menu.NONE, 0, 0, R.string.remove );
         }
     }
@@ -106,16 +92,19 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     public boolean onContextItemSelected( MenuItem item )
     {
         AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) item.getMenuInfo();
-        Gamer gamer = alGamers.get( info.position );
+        if ( info.targetView.getId() != R.id.listViewGamers )
+        { return false; }
+        Gamer gamer = allGamers.get( info.position );
         adapter.remove( gamer );
         try
         {
             DatabaseManager.getInstance().getHelper().getGamerDao().delete( gamer );
-        } catch ( SQLException e )
+        }
+        catch ( SQLException e )
         {
             e.printStackTrace();
         }
-        gamers.remove( gamer );
+        getGamers().remove( gamer );
         return true;
     }
 
@@ -123,23 +112,19 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     public boolean onOptionsItemSelected( MenuItem item )
     {
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if ( id == R.id.action_add_gamer )
         {
-
             Gamer gamer = new Gamer();
-            CreateDialog( gamer, true );
+            CreateDialog( game, gamer, true );
             return true;
         }
-
         return super.onOptionsItemSelected( item );
     }
 
-    private void CreateDialog( Gamer gamer, Boolean addToAdapter )
+    private void CreateDialog( Game game, Gamer gamer, Boolean addToAdapter )
     {
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        GamerDialogResultListener adder = new GamerDialogResultListener( adapter, gamers, gamer, addToAdapter );
+        GamerDialogResultListener adder = new GamerDialogResultListener( adapter, game, gamer, addToAdapter );
         GamerDialogFragment dialog = GamerDialogFragment.newInstance( gamer.getName(), adder );
         adder.dialogFragment = dialog;
         dialog.show( fm, "GamerProps" );
@@ -149,7 +134,6 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     public View onCreateView( LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState )
     {
-        // Inflate the layout for this fragment
         return inflater.inflate( R.layout.fragment_pager_gamers, container, false );
     }
 
@@ -157,44 +141,17 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     public void onCreateOptionsMenu( Menu menu, MenuInflater inflater )
     {
         inflater.inflate( R.menu.menu_gamers, menu );
-
     }
 
     @Override
     public void onAttach( Activity activity )
     {
         super.onAttach( activity );
-        try
-        {
-            //  mListener = (OnFragmentInteractionListener) activity;
-        } catch ( ClassCastException e )
-        {
-            throw new ClassCastException( activity.toString()
-                    + " must implement OnFragmentInteractionListener" );
-        }
     }
 
     @Override
     public void onDetach()
     {
         super.onDetach();
-        mListener = null;
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener
-    {
-        // TODO: Update argument type and name
-        void onFragmentInteraction( Uri uri );
-    }
-
 }
