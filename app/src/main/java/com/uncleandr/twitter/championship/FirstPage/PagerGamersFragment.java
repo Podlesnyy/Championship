@@ -127,10 +127,18 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
         //noinspection SimplifiableIfStatement
         if ( id == R.id.action_add_gamer )
         {
-
             Gamer gamer = new Gamer();
             CreateDialog( gamer, true );
             return true;
+        }
+        if( id == R.id.action_add_gamer_contact )
+        {
+            Gamer gamer = new Gamer();
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            GamerDialogResultListener adder = new GamerDialogResultListener( adapter, gamers, gamer, true );
+            GamerFromContactsDialogFragment dialog = GamerFromContactsDialogFragment.newInstance( adder );
+            adder.dialogFragment = dialog;
+            dialog.show( fm, "GamerProps" );
         }
 
         return super.onOptionsItemSelected( item );
@@ -157,7 +165,6 @@ public class PagerGamersFragment extends android.support.v4.app.Fragment
     public void onCreateOptionsMenu( Menu menu, MenuInflater inflater )
     {
         inflater.inflate( R.menu.menu_gamers, menu );
-
     }
 
     @Override

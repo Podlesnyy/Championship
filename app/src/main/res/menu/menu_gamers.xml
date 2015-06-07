@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_action_user_add"
         android:title="@string/add_gamer"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_add_gamer_contact"
+        android:icon="@drawable/ic_action_contact_add"
+        android:title="@string/add_gamer_contact"
+        app:showAsAction="always"/>
 </menu>

@@ -6,4 +6,5 @@
     <string name="remove">Удалить</string>
     <string name="matches">Матчи</string>
     <string name="enter_gamer_name">Имя игрока</string>
+    <string name="add_gamer_contact">Добавить игрока из списка контактов</string>
 </resources>

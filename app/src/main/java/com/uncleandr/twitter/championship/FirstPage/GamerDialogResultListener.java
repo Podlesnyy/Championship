@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 public class GamerDialogResultListener implements DialogInterface.OnClickListener
 {
-    GamerDialogFragment dialogFragment;
+    public GamerName dialogFragment;
     private ArrayAdapter< Gamer > adapter;
     private ForeignCollection< Gamer > gamers;
     private Gamer gamer;

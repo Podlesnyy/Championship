@@ -19,7 +19,7 @@ import comuncleandr.twitter.championship.R;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class GamerDialogFragment extends DialogFragment
+public class GamerDialogFragment extends DialogFragment implements GamerName
 {
     private String gamerName;
     private DialogInterface.OnClickListener onOk;
@@ -33,8 +33,7 @@ public class GamerDialogFragment extends DialogFragment
 
         return fragment;
     }
-
-
+    
     @Override
     public Dialog onCreateDialog( Bundle savedInstanceState )
     {
