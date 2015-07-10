@@ -16,20 +16,24 @@
 
 package com.twitter.uncleandr.championship;
 
-public class ViewModel {
+public class ViewModel
+{
     private String text;
     private String image;
 
-    public ViewModel(String text, String image) {
-        this. text = text;
+    public ViewModel( String text, String image )
+    {
+        this.text = text;
         this.image = image;
     }
 
-    public String getText() {
+    public String getText()
+    {
         return text;
     }
 
-    public String getImage() {
+    public String getImage()
+    {
         return image;
     }
 }

@@ -27,98 +27,125 @@ import android.view.animation.Interpolator;
 
 import java.util.HashMap;
 
-public class ScrollManager extends RecyclerView.OnScrollListener {
+public class ScrollManager extends RecyclerView.OnScrollListener
+{
 
     private static final int MIN_SCROLL_TO_HIDE = 10;
     private boolean hidden;
     private int accummulatedDy;
     private int totalDy;
     private int initialOffset;
-    private HashMap<View, Direction> viewsToHide = new HashMap<>();
+    private HashMap< View, Direction > viewsToHide = new HashMap<>();
 
-    public enum Direction {UP, DOWN}
-
-    public ScrollManager() {
+    public ScrollManager()
+    {
     }
 
-    public void attach(RecyclerView recyclerView) {
-        recyclerView.addOnScrollListener(this);
+    public void attach( RecyclerView recyclerView )
+    {
+        recyclerView.addOnScrollListener( this );
     }
 
-    public void addView(View view, Direction direction) {
-        viewsToHide.put(view, direction);
+    public void addView( View view, Direction direction )
+    {
+        viewsToHide.put( view, direction );
     }
 
-    public void setInitialOffset(int initialOffset) {
+    public void setInitialOffset( int initialOffset )
+    {
         this.initialOffset = initialOffset;
     }
 
-    @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+    @Override
+    public void onScrolled( RecyclerView recyclerView, int dx, int dy )
+    {
         totalDy += dy;
 
-        if (totalDy < initialOffset) {
+        if ( totalDy < initialOffset )
+        {
             return;
         }
 
-        if (dy > 0) {
+        if ( dy > 0 )
+        {
             accummulatedDy = accummulatedDy > 0 ? accummulatedDy + dy : dy;
-            if (accummulatedDy > MIN_SCROLL_TO_HIDE) {
+            if ( accummulatedDy > MIN_SCROLL_TO_HIDE )
+            {
                 hideViews();
             }
-        } else if (dy < 0) {
+        }
+        else if ( dy < 0 )
+        {
             accummulatedDy = accummulatedDy < 0 ? accummulatedDy + dy : dy;
-            if (accummulatedDy < -MIN_SCROLL_TO_HIDE) {
+            if ( accummulatedDy < -MIN_SCROLL_TO_HIDE )
+            {
                 showViews();
             }
         }
     }
 
-    public void hideViews() {
-        if (!hidden) {
+    public void hideViews()
+    {
+        if ( !hidden )
+        {
             hidden = true;
-            for (View view : viewsToHide.keySet()) {
-                hideView(view, viewsToHide.get(view));
+            for ( View view : viewsToHide.keySet() )
+            {
+                hideView( view, viewsToHide.get( view ) );
             }
         }
     }
 
-    private void showViews() {
-        if (hidden) {
+    private void showViews()
+    {
+        if ( hidden )
+        {
             hidden = false;
-            for (View view : viewsToHide.keySet()) {
-                showView(view);
+            for ( View view : viewsToHide.keySet() )
+            {
+                showView( view );
             }
         }
     }
 
-    private void hideView(View view, Direction direction) {
-        int height = calculateTranslation(view);
+    private void hideView( View view, Direction direction )
+    {
+        int height = calculateTranslation( view );
         int translateY = direction == Direction.UP ? -height : height;
-        runTranslateAnimation(view, translateY, new AccelerateInterpolator(3));
+        runTranslateAnimation( view, translateY, new AccelerateInterpolator( 3 ) );
     }
 
     /**
      * Takes height + margins
+     *
      * @param view View to translate
      * @return translation in pixels
      */
-    private int calculateTranslation(View view) {
+    private int calculateTranslation( View view )
+    {
         int height = view.getHeight();
 
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        ViewGroup.MarginLayoutParams params = ( ViewGroup.MarginLayoutParams ) view.getLayoutParams();
         int margins = params.topMargin + params.bottomMargin;
 
         return height + margins;
     }
 
-    private void showView(View view) {
-        runTranslateAnimation(view, 0, new DecelerateInterpolator(3));
+    private void showView( View view )
+    {
+        runTranslateAnimation( view, 0, new DecelerateInterpolator( 3 ) );
     }
 
-    private void runTranslateAnimation(View view, int translateY, Interpolator interpolator) {
-        Animator slideInAnimation = ObjectAnimator.ofFloat(view, "translationY", translateY);
-        slideInAnimation.setDuration(view.getContext().getResources().getInteger(android.R.integer.config_mediumAnimTime));
-        slideInAnimation.setInterpolator(interpolator);
+    private void runTranslateAnimation( View view, int translateY, Interpolator interpolator )
+    {
+        Animator slideInAnimation = ObjectAnimator.ofFloat( view, "translationY", translateY );
+        slideInAnimation.setDuration( view.getContext().getResources().getInteger( android.R.integer.config_mediumAnimTime ) );
+        slideInAnimation.setInterpolator( interpolator );
         slideInAnimation.start();
+    }
+
+    public enum Direction
+    {
+        UP, DOWN
     }
 }

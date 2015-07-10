@@ -24,11 +24,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 {
     public static final String AVATAR_URL = "https://pbs.twimg.com/profile_images/412967939772796928/VwPG3rwa.jpeg";
 
-    private static List<ViewModel> items = new ArrayList<>();
+    private static List< ViewModel > items = new ArrayList<>();
 
-    static {
-        for (int i = 1; i <= 10; i++) {
-            items.add(new ViewModel("Item " + i, "http://lorempixel.com/500/500/animals/" + i));
+    static
+    {
+        for ( int i = 1; i <= 10; i++ )
+        {
+            items.add( new ViewModel( "Item " + i, "http://lorempixel.com/500/500/animals/" + i ) );
         }
     }
 
@@ -53,11 +55,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
 
 
-    private void initRecyclerView() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
-        adapter.setOnItemClickListener(this);
+    private void initRecyclerView()
+    {
+        RecyclerView recyclerView = ( RecyclerView ) findViewById( R.id.recycler );
+        recyclerView.setLayoutManager( new GridLayoutManager( this, 2 ) );
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter( items );
+        adapter.setOnItemClickListener( this );
         recyclerView.setAdapter( adapter );
     }
 
@@ -117,7 +120,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         return super.onOptionsItemSelected( item );
     }
 
-    @Override public void onItemClick(View view, ViewModel viewModel) {
-        DetailActivity.navigate(this, view.findViewById(R.id.image), viewModel);
+    @Override
+    public void onItemClick( View view, ViewModel viewModel )
+    {
+        DetailActivity.navigate( this, view.findViewById( R.id.image ), viewModel );
     }
 }
