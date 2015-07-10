@@ -7,6 +7,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,10 +16,21 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity
+
+public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnItemClickListener
 {
     public static final String AVATAR_URL = "https://pbs.twimg.com/profile_images/412967939772796928/VwPG3rwa.jpeg";
+
+    private static List<ViewModel> items = new ArrayList<>();
+
+    static {
+        for (int i = 1; i <= 10; i++) {
+            items.add(new ViewModel("Item " + i, "http://lorempixel.com/500/500/animals/" + i));
+        }
+    }
 
     private DrawerLayout drawerLayout;
     private View content;
@@ -28,6 +41,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
 
+        initRecyclerView();
         initFab();
         initToolbar();
         setupDrawerLayout();
@@ -38,6 +52,14 @@ public class MainActivity extends AppCompatActivity
         Picasso.with( this ).load( AVATAR_URL ).transform( new CircleTransform() ).into( avatar );
     }
 
+
+    private void initRecyclerView() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
+        adapter.setOnItemClickListener(this);
+        recyclerView.setAdapter( adapter );
+    }
 
     private void initFab()
     {
@@ -93,5 +115,9 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected( item );
+    }
+
+    @Override public void onItemClick(View view, ViewModel viewModel) {
+        DetailActivity.navigate(this, view.findViewById(R.id.image), viewModel);
     }
 }
