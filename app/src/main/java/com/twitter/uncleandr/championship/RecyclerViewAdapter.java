@@ -25,16 +25,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.twitter.uncleandr.championship.DAO.Game;
 
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter< RecyclerViewAdapter.ViewHolder > implements View.OnClickListener
 {
 
-    private List< ViewModel > items;
+    private List< Game > items;
     private OnItemClickListener onItemClickListener;
 
-    public RecyclerViewAdapter( List< ViewModel > items )
+    public RecyclerViewAdapter( List< Game > items )
     {
         this.items = items;
     }
@@ -55,10 +56,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter< RecyclerViewAdapt
     @Override
     public void onBindViewHolder( ViewHolder holder, int position )
     {
-        ViewModel item = items.get( position );
-        holder.text.setText( item.getText() );
-        holder.image.setImageBitmap( null );
-        Picasso.with( holder.image.getContext() ).load( item.getImage() ).into( holder.image );
+        Game item = items.get( position );
+        holder.text.setText( Integer.toString( item.getId() ) );
         holder.itemView.setTag( item );
     }
 
@@ -94,13 +93,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter< RecyclerViewAdapt
 
     protected static class ViewHolder extends RecyclerView.ViewHolder
     {
-        public ImageView image;
         public TextView text;
 
         public ViewHolder( View itemView )
         {
             super( itemView );
-            image = ( ImageView ) itemView.findViewById( R.id.image );
             text = ( TextView ) itemView.findViewById( R.id.text );
         }
     }
