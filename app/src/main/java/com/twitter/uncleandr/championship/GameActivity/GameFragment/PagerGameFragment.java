@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
 import com.j256.ormlite.dao.ForeignCollection;
 import com.twitter.uncleandr.championship.DAO.Game;
@@ -25,13 +26,11 @@ import java.util.ArrayList;
 
 public class PagerGameFragment extends android.support.v4.app.Fragment
 {
-    private ArrayAdapter< Gamer > adapter;
-    private ArrayList< Gamer > allGamers;
+
     private Game game;
 
     public PagerGameFragment()
     {
-        // Required empty public constructor
     }
 
     public static PagerGameFragment newInstance( Game game )
@@ -39,11 +38,6 @@ public class PagerGameFragment extends android.support.v4.app.Fragment
         PagerGameFragment fragment = new PagerGameFragment();
         fragment.game = game;
         return fragment;
-    }
-
-    private ForeignCollection< Gamer > getGamers()
-    {
-        return game.getGamers();
     }
 
     @Override
@@ -59,37 +53,12 @@ public class PagerGameFragment extends android.support.v4.app.Fragment
     {
         super.onActivityCreated( savedInstanceState );
 
-        /*allGamers = new ArrayList<>( getGamers() );
-        adapter = new ArrayAdapter<>( getActivity(), R.layout.gamers_list_text_view, allGamers );
-        ListView listview = ( ListView ) getActivity().findViewById( R.id.listViewGamers );
-        listview.setAdapter( adapter );
-        listview.setOnItemClickListener( new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick( AdapterView< ? > parent, View view, int position, long id )
-            {
-                Gamer gamer = ( Gamer ) parent.getItemAtPosition( position );
-                CreateDialog( game, gamer, false );
-            }
-        } );
-        registerForContextMenu( listview );*/
-    }
-
-    @Override
-    public void onCreateContextMenu( ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo )
-    {
-        if ( v.getId() == R.id.listViewGamers )
-        {
-            AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) menuInfo;
-            menu.setHeaderTitle( allGamers.get( info.position ).getName() );
-            menu.add( Menu.NONE, 0, 0, R.string.remove );
-        }
     }
 
     @Override
     public boolean onContextItemSelected( MenuItem item )
     {
-        AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) item.getMenuInfo();
+/*        AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) item.getMenuInfo();
         if ( info.targetView.getId() != R.id.listViewGamers )
         {
             return false;
@@ -103,37 +72,19 @@ public class PagerGameFragment extends android.support.v4.app.Fragment
         {
             e.printStackTrace();
         }
-        getGamers().remove( gamer );
+        getGamers().remove( gamer );*/
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected( MenuItem item )
-    {
-        int id = item.getItemId();
-        /*if ( id == R.id.action_add_gamer )
-        {
-            Gamer gamer = new Gamer();
-            CreateDialog( game, gamer, true );
-            return true;
-        }*/
-        return super.onOptionsItemSelected( item );
-    }
-
-    private void CreateDialog( Game game, Gamer gamer, Boolean addToAdapter )
-    {
-       /* FragmentManager fm = getActivity().getSupportFragmentManager();
-        GamerDialogResultListener adder = new GamerDialogResultListener( adapter, game, gamer, addToAdapter );
-        GamerDialogFragment dialog = GamerDialogFragment.newInstance( gamer.getName(), adder );
-        adder.dialogFragment = dialog;
-        dialog.show( fm, "GamerProps" );*/
-    }
 
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState )
     {
-        return inflater.inflate( R.layout.activity_game_fragment_game, container, false );
+        View view = inflater.inflate( R.layout.activity_game_fragment_game, container, false );
+        EditText edit = ( EditText ) view.findViewById( R.id.editText );
+        edit.setText( Integer.toString( game.getId() ) );
+        return view;
     }
 
     @Override

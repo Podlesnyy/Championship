@@ -138,10 +138,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
 
     @Override
-    public void onItemClick( View view, ViewModel viewModel )
+    public void onItemClick( View view, Game game )
     {
-        clicked = true;
-        invalidateOptionsMenu();
+        GameActivity.Create( this, game );
     }
 
     @Override

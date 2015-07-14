@@ -11,7 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.twitter.uncleandr.championship.DAO.Game;
+import com.twitter.uncleandr.championship.DB.DatabaseManager;
 import com.twitter.uncleandr.championship.R;
+
+import java.sql.SQLException;
 
 
 public class GameActivity extends AppCompatActivity
@@ -35,6 +38,14 @@ public class GameActivity extends AppCompatActivity
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_game );
 
+        int gameId = getIntent().getIntExtra( param1, -1 );
+        try
+        {
+            game = DatabaseManager.getInstance().getHelper().getGameDao().queryForId( gameId );
+        } catch ( SQLException e )
+        {
+            e.printStackTrace();
+        }
         mAdapter = new PagerAdapter( getSupportFragmentManager(), game, getApplicationContext() );
         mViewPager = ( ViewPager ) findViewById( R.id.view );
         mViewPager.setAdapter( mAdapter );

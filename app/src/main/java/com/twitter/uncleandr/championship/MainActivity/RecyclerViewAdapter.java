@@ -77,7 +77,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter< RecyclerViewAdapt
                 @Override
                 public void run()
                 {
-                    onItemClickListener.onItemClick( v, ( ViewModel ) v.getTag() );
+                    onItemClickListener.onItemClick( v, ( Game ) v.getTag() );
                 }
             }, 200 );
         }
@@ -86,7 +86,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter< RecyclerViewAdapt
     public interface OnItemClickListener
     {
 
-        void onItemClick( View view, ViewModel viewModel );
+        void onItemClick( View view, Game viewModel );
 
     }
 
