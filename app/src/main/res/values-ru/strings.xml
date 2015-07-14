@@ -13,4 +13,6 @@
     <string name="game">Игра</string>
     <string name="games">Игры</string>
     <string name="settings">Настройки</string>
+    <string name="title_hint_bold">Название</string>
+    <string name="new_game">Новая игра</string>
 </resources>

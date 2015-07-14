@@ -144,6 +144,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
 
     @Override
+    public void onLongClick( View view, Game viewModel )
+    {
+
+    }
+
+    @Override
     public void onClick( View v )
     {
         Game game = new Game();
@@ -151,6 +157,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         {
             dbHelper.getGameDao().create( game );
             dbHelper.getGameDao().refresh( game );//Заполняет поля ForeignCollection
+            game.setName( String.format( "%s %d", getResources().getString( R.string.new_game ), game.getId() ) );
+            dbHelper.getGameDao().update( game );
             games.add( game );
             adapter.notifyItemInserted( games.size() - 1 );
             GameActivity.Create( this, game );

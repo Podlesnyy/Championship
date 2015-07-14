@@ -28,7 +28,7 @@ import com.twitter.uncleandr.championship.R;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter< RecyclerViewAdapter.ViewHolder > implements View.OnClickListener
+public class RecyclerViewAdapter extends RecyclerView.Adapter< RecyclerViewAdapter.ViewHolder > implements View.OnClickListener, View.OnLongClickListener
 {
 
     private List< Game > items;
@@ -49,6 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter< RecyclerViewAdapt
     {
         View v = LayoutInflater.from( parent.getContext() ).inflate( R.layout.item_recycler, parent, false );
         v.setOnClickListener( this );
+        v.setOnLongClickListener( this );
         return new ViewHolder( v );
     }
 
@@ -56,7 +57,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter< RecyclerViewAdapt
     public void onBindViewHolder( ViewHolder holder, int position )
     {
         Game item = items.get( position );
-        holder.text.setText( Integer.toString( item.getId() ) );
+        holder.text.setText( item.getName() );
         holder.itemView.setTag( item );
     }
 
@@ -83,11 +84,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter< RecyclerViewAdapt
         }
     }
 
+    @Override
+    public boolean onLongClick( final View v )
+    {
+        if ( onItemClickListener != null )
+        {
+            new Handler().postDelayed( new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    onItemClickListener.onLongClick( v, ( Game ) v.getTag() );
+                }
+            }, 500 );
+        }
+
+        return true;
+    }
+
     public interface OnItemClickListener
     {
-
         void onItemClick( View view, Game viewModel );
-
+        void onLongClick( View view, Game viewModel );
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder

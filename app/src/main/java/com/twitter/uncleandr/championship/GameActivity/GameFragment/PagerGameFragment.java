@@ -4,25 +4,16 @@ package com.twitter.uncleandr.championship.GameActivity.GameFragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
-import com.j256.ormlite.dao.ForeignCollection;
 import com.twitter.uncleandr.championship.DAO.Game;
-import com.twitter.uncleandr.championship.DAO.Gamer;
-import com.twitter.uncleandr.championship.DB.DatabaseManager;
 import com.twitter.uncleandr.championship.R;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class PagerGameFragment extends android.support.v4.app.Fragment
 {
@@ -52,7 +43,6 @@ public class PagerGameFragment extends android.support.v4.app.Fragment
     public void onActivityCreated( @Nullable Bundle savedInstanceState )
     {
         super.onActivityCreated( savedInstanceState );
-
     }
 
     @Override
@@ -83,7 +73,8 @@ public class PagerGameFragment extends android.support.v4.app.Fragment
     {
         View view = inflater.inflate( R.layout.activity_game_fragment_game, container, false );
         EditText edit = ( EditText ) view.findViewById( R.id.editText );
-        edit.setText( Integer.toString( game.getId() ) );
+        edit.setText( game.getName() );
+        edit.setSelection( edit.getText().length() );
         return view;
     }
 

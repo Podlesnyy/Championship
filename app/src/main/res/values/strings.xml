@@ -13,4 +13,6 @@
     <string name="game">Game</string>
     <string name="games">Games</string>
     <string name="settings">Settings</string>
+    <string name="title_hint_bold"><b>Title</b></string>
+    <string name="new_game">New game</string>
 </resources>

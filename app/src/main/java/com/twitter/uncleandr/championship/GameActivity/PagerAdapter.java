@@ -55,7 +55,7 @@ class PagerAdapter extends FragmentPagerAdapter
         switch ( position )
         {
             case 0:
-                return context.getString( R.string.gamers );
+                return context.getString( R.string.game );
             case 1:
                 return context.getString( R.string.matches );
         }
