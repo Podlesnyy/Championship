@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package com.twitter.uncleandr.championship;
+package com.twitter.uncleandr.championship.MainActivity;
 
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.twitter.uncleandr.championship.DAO.Game;
+import com.twitter.uncleandr.championship.R;
 
 import java.util.List;
 

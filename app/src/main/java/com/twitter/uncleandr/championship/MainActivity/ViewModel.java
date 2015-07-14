@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.twitter.uncleandr.championship;
+package com.twitter.uncleandr.championship.MainActivity;
 
 public class ViewModel
 {

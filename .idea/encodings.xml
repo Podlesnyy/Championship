@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/twitter/uncleandr/championship/DAO/Game.java" charset="windows-1251" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/twitter/uncleandr/championship/DAO/Gamer.java" charset="windows-1251" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/twitter/uncleandr/championship/DAO/Match.java" charset="windows-1251" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/twitter/uncleandr/championship/DAO/MatchStatus.java" charset="windows-1251" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/twitter/uncleandr/championship/DB/DatabaseHelper.java" charset="windows-1251" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/twitter/uncleandr/championship/DB/DatabaseManager.java" charset="windows-1251" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

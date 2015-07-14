@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.twitter.uncleandr.championship;
+package com.twitter.uncleandr.championship.MainActivity;
 
 import android.content.Context;
 import android.util.AttributeSet;

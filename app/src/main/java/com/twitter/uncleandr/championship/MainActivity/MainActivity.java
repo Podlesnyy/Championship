@@ -1,4 +1,4 @@
-package com.twitter.uncleandr.championship;
+package com.twitter.uncleandr.championship.MainActivity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -19,25 +19,16 @@ import com.squareup.picasso.Picasso;
 import com.twitter.uncleandr.championship.DAO.Game;
 import com.twitter.uncleandr.championship.DB.DatabaseHelper;
 import com.twitter.uncleandr.championship.DB.DatabaseManager;
+import com.twitter.uncleandr.championship.GameActivity.GameActivity;
+import com.twitter.uncleandr.championship.R;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnItemClickListener
+public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnItemClickListener, View.OnClickListener
 {
     public static final String AVATAR_URL = "https://pbs.twimg.com/profile_images/412967939772796928/VwPG3rwa.jpeg";
-
-    private static List< ViewModel > items = new ArrayList<>();
-
-    static
-    {
-        for ( int i = 1; i <= 10; i++ )
-        {
-            items.add( new ViewModel( "Item " + i, "http://lorempixel.com/500/500/animals/" + i ) );
-        }
-    }
 
     private DrawerLayout drawerLayout;
     private View content;
@@ -82,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         recyclerView.setAdapter( adapter );
 
         RecyclerView.ItemDecoration itemDecoration =
-                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
-        recyclerView.addItemDecoration(itemDecoration);
+                new DividerItemDecoration( this, DividerItemDecoration.VERTICAL_LIST );
+        recyclerView.addItemDecoration( itemDecoration );
     }
 
     @Override
@@ -99,23 +90,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     private void initFab()
     {
-        findViewById( R.id.fab ).setOnClickListener( new View.OnClickListener()
-        {
-            @Override
-            public void onClick( View v )
-            {
-                Game game = new Game();
-                try
-                {
-                    dbHelper.getGameDao().create( game );
-                    games.add( game );
-                    adapter.notifyItemInserted( games.size() - 1 );
-                } catch ( SQLException e )
-                {
-                    e.printStackTrace();
-                }
-            }
-        } );
+        findViewById( R.id.fab ).setOnClickListener( this );
     }
 
     private void initToolbar()
@@ -123,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         final Toolbar toolbar = ( Toolbar ) findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );
         final ActionBar actionBar = getSupportActionBar();
-
 
         if ( actionBar != null )
         {
@@ -168,6 +142,22 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     {
         clicked = true;
         invalidateOptionsMenu();
-        DetailActivity.navigate( this, view.findViewById( R.id.image ), viewModel );
+    }
+
+    @Override
+    public void onClick( View v )
+    {
+        Game game = new Game();
+        try
+        {
+            dbHelper.getGameDao().create( game );
+            dbHelper.getGameDao().refresh( game );//Заполняет поля ForeignCollection
+            games.add( game );
+            adapter.notifyItemInserted( games.size() - 1 );
+            GameActivity.Create( this, game );
+        } catch ( SQLException e )
+        {
+            e.printStackTrace();
+        }
     }
 }

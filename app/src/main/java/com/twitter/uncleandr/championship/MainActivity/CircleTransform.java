@@ -1,4 +1,4 @@
-package com.twitter.uncleandr.championship;
+package com.twitter.uncleandr.championship.MainActivity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
