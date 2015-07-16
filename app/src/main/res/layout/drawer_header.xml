@@ -5,7 +5,6 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="172dp"
-                android:background="@drawable/drawer_background"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/status_bar_height"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark">
@@ -16,6 +15,7 @@
         android:layout_height="64dp"
         android:layout_margin="@dimen/spacing_large"
         android:elevation="4dp"
+        android:contentDescription="@string/app_name"
         tools:src="@drawable/ic_launcher"/>
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_above="@+id/email"
         android:layout_marginLeft="@dimen/spacing_large"
         android:layout_marginStart="@dimen/spacing_large"
-        android:text="Username"
+        android:text="Uncle Andr"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
     <TextView
@@ -35,7 +35,7 @@
         android:layout_marginBottom="@dimen/spacing_large"
         android:layout_marginLeft="@dimen/spacing_large"
         android:layout_marginStart="@dimen/spacing_large"
-        android:text="username@mymail.com"
+        android:text="podlesniy@gmail.com"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
 </RelativeLayout>

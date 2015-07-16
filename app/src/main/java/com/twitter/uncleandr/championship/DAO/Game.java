@@ -19,6 +19,8 @@ public class Game
 
     @ForeignCollectionField
     private ForeignCollection< Match > matches;
+    @DatabaseField
+    private String title;
 
     public ForeignCollection< Gamer > getGamers()
     {
@@ -40,23 +42,20 @@ public class Game
         this.matches = matches;
     }
 
-    @DatabaseField
-    private String name;
-
     @Override
     public String toString()
     {
-        return name;
+        return title;
     }
 
-    public String getName()
+    public String getTitle()
     {
-        return name;
+        return title;
     }
 
-    public void setName( String name )
+    public void setTitle( String title )
     {
-        this.name = name;
+        this.title = title;
     }
 
     public int getId()
@@ -67,5 +66,10 @@ public class Game
     public void setId( int id )
     {
         this.id = id;
+    }
+
+    public Boolean getIsActive()
+    {
+        return true;
     }
 }

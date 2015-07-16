@@ -9,10 +9,10 @@
     <string name="match">Матч</string>
     <string name="matches">Матчи</string>
     <string name="add_match">Добавить матч</string>
-    <string name="json_file_name">gamers.json</string>
     <string name="game">Игра</string>
     <string name="games">Игры</string>
     <string name="settings">Настройки</string>
     <string name="title_hint_bold">Название</string>
     <string name="new_game">Новая игра</string>
+    <string name="delete">Удалить</string>
 </resources>

@@ -9,10 +9,10 @@
     <string name="match">Match</string>
     <string name="matches">Matches</string>
     <string name="add_match">Add match</string>
-    <string name="json_file_name">gamers.json</string>
     <string name="game">Game</string>
     <string name="games">Games</string>
     <string name="settings">Settings</string>
     <string name="title_hint_bold"><b>Title</b></string>
     <string name="new_game">New game</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -40,12 +40,6 @@ public class PagerGameFragment extends android.support.v4.app.Fragment
     }
 
     @Override
-    public void onActivityCreated( @Nullable Bundle savedInstanceState )
-    {
-        super.onActivityCreated( savedInstanceState );
-    }
-
-    @Override
     public boolean onContextItemSelected( MenuItem item )
     {
 /*        AdapterView.AdapterContextMenuInfo info = ( AdapterView.AdapterContextMenuInfo ) item.getMenuInfo();
@@ -73,7 +67,7 @@ public class PagerGameFragment extends android.support.v4.app.Fragment
     {
         View view = inflater.inflate( R.layout.activity_game_fragment_game, container, false );
         EditText edit = ( EditText ) view.findViewById( R.id.editText );
-        edit.setText( game.getName() );
+        edit.setText( game.getTitle() );
         edit.setSelection( edit.getText().length() );
         return view;
     }
@@ -84,15 +78,4 @@ public class PagerGameFragment extends android.support.v4.app.Fragment
         //inflater.inflate( R.menu.menu_gamers, menu );
     }
 
-    @Override
-    public void onAttach( Activity activity )
-    {
-        super.onAttach( activity );
-    }
-
-    @Override
-    public void onDetach()
-    {
-        super.onDetach();
-    }
 }

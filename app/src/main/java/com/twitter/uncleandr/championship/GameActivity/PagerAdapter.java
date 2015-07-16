@@ -18,8 +18,8 @@ import java.util.ArrayList;
  */
 class PagerAdapter extends FragmentPagerAdapter
 {
-    ArrayList< Fragment > fragments = new ArrayList<>();
-    private Context context;
+    private final ArrayList< Fragment > fragments = new ArrayList<>();
+    private final Context context;
 
     public PagerAdapter( FragmentManager fm, Game game, Context context )
     {
@@ -28,13 +28,6 @@ class PagerAdapter extends FragmentPagerAdapter
         fragments.add( PagerGameFragment.newInstance( game ) );
         //fragments.add( PagerGamersFragment.newInstance( game ) );
         //fragments.add( PagerMatchesFragment.newInstance( game ) );
-    }
-
-
-    @Override
-    public Object instantiateItem( ViewGroup container, int position )
-    {
-        return super.instantiateItem( container, position );
     }
 
     @Override

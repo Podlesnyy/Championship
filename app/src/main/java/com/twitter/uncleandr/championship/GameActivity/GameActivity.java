@@ -19,11 +19,10 @@ import java.sql.SQLException;
 
 public class GameActivity extends AppCompatActivity
 {
-    static final String param1 = "game";
-    PagerAdapter mAdapter;
-    ViewPager mViewPager;
+    private static final String param1 = "game";
+    private PagerAdapter mAdapter;
+    private ViewPager mViewPager;
     private Game game;
-    private TabLayout mSlidingTabLayout;
 
     public static void Create( AppCompatActivity activity, Game game )
     {
@@ -50,7 +49,7 @@ public class GameActivity extends AppCompatActivity
         mViewPager = ( ViewPager ) findViewById( R.id.view );
         mViewPager.setAdapter( mAdapter );
 
-        mSlidingTabLayout = ( TabLayout ) findViewById( R.id.sliding_tabs );
+        TabLayout mSlidingTabLayout = ( TabLayout ) findViewById( R.id.sliding_tabs );
         mSlidingTabLayout.setupWithViewPager( mViewPager );
     }
 

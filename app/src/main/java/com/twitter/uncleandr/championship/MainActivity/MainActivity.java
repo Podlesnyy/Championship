@@ -7,6 +7,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -26,16 +27,19 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnItemClickListener, View.OnClickListener
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, Adapter.ViewHolder.ClickListener
 {
-    public static final String AVATAR_URL = "https://pbs.twimg.com/profile_images/412967939772796928/VwPG3rwa.jpeg";
+    private static final String AVATAR_URL = "https://pbs.twimg.com/profile_images/412967939772796928/VwPG3rwa.jpeg";
 
     private DrawerLayout drawerLayout;
     private View content;
-    private boolean clicked;
     private List< Game > games;
     private DatabaseHelper dbHelper;
-    private RecyclerViewAdapter adapter;
+    private Adapter adapter;
+
+    private final ActionModeCallback actionModeCallback = new ActionModeCallback();
+    private ActionMode actionMode;
+
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -68,24 +72,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         {
             e.printStackTrace();
         }
-        adapter = new RecyclerViewAdapter( games );
-        adapter.setOnItemClickListener( this );
+        adapter = new Adapter( games, this );
         recyclerView.setAdapter( adapter );
-
-        RecyclerView.ItemDecoration itemDecoration =
-                new DividerItemDecoration( this, DividerItemDecoration.VERTICAL_LIST );
-        recyclerView.addItemDecoration( itemDecoration );
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu( Menu menu )
-    {
-        if ( clicked )
-        {
-            menu.add( Menu.NONE, 0, Menu.NONE, "View RSS" ).setIcon( R.drawable.abc_btn_radio_material )
-                    .setShowAsAction( MenuItem.SHOW_AS_ACTION_ALWAYS );
-        }
-        return super.onPrepareOptionsMenu( menu );
     }
 
     private void initFab()
@@ -138,18 +126,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
 
     @Override
-    public void onItemClick( View view, Game game )
-    {
-        GameActivity.Create( this, game );
-    }
-
-    @Override
-    public void onLongClick( View view, Game viewModel )
-    {
-
-    }
-
-    @Override
     public void onClick( View v )
     {
         Game game = new Game();
@@ -157,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         {
             dbHelper.getGameDao().create( game );
             dbHelper.getGameDao().refresh( game );//Заполняет поля ForeignCollection
-            game.setName( String.format( "%s %d", getResources().getString( R.string.new_game ), game.getId() ) );
+            game.setTitle( String.format( "%s %d", getResources().getString( R.string.new_game ), game.getId() ) );
             dbHelper.getGameDao().update( game );
             games.add( game );
             adapter.notifyItemInserted( games.size() - 1 );
@@ -165,6 +141,85 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         } catch ( SQLException e )
         {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onItemClicked( int position )
+    {
+        if ( actionMode != null )
+        {
+            toggleSelection( position );
+        }
+        else
+        {
+            GameActivity.Create( this, games.get( position ) );
+        }
+    }
+
+    @Override
+    public void onItemLongClicked( int position )
+    {
+        if ( actionMode == null )
+        {
+            actionMode = startSupportActionMode( actionModeCallback );
+        }
+
+        toggleSelection( position );
+    }
+
+    private void toggleSelection( int position )
+    {
+        adapter.toggleSelection( position );
+        int count = adapter.getSelectedItemCount();
+
+        if ( count == 0 )
+        {
+            actionMode.finish();
+        }
+        else
+        {
+            actionMode.setTitle(games.get( position ).getTitle());
+            actionMode.invalidate();
+        }
+    }
+
+    private class ActionModeCallback implements ActionMode.Callback
+    {
+
+        @Override
+        public boolean onCreateActionMode( ActionMode mode, Menu menu )
+        {
+            mode.getMenuInflater().inflate( R.menu.selected_menu, menu );
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode( ActionMode mode, Menu menu )
+        {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked( ActionMode mode, MenuItem item )
+        {
+            switch ( item.getItemId() )
+            {
+                case R.id.menu_item_game_remove:
+                    adapter.removeItems( adapter.getSelectedItems() );
+                    mode.finish();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode( ActionMode mode )
+        {
+            adapter.clearSelection();
+            actionMode = null;
         }
     }
 }

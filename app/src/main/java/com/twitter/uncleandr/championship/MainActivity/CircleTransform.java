@@ -10,9 +10,8 @@ import com.squareup.picasso.Transformation;
 /**
  * https://gist.github.com/julianshen/5829333
  */
-public class CircleTransform implements Transformation
+class CircleTransform implements Transformation
 {
-
     @Override
     public Bitmap transform( Bitmap source )
     {
