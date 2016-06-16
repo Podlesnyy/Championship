@@ -17,7 +17,6 @@ import com.twitter.uncleandr.championship.R;
 
 import java.util.ArrayList;
 
-
 /**
  * Created by zexir on 18.05.2015.
  */
@@ -68,11 +67,11 @@ public class MatchDialogFragment extends DialogFragment
     @Override
     public Dialog onCreateDialog( Bundle savedInstanceState )
     {
-        view = getActivity().getLayoutInflater()
-                .inflate( R.layout.dialog_match, null );
+        view = getActivity().getLayoutInflater().inflate( R.layout.dialog_match, null );
         ArrayList< Gamer > gamers = new ArrayList<>( game.getGamers() );
-        Dialog dlg = new AlertDialog.Builder( getActivity() ).setTitle( R.string.match ).setView( view ).setPositiveButton( android.R.string.ok,
-                onOk ).create();
+        Dialog dlg =
+                new AlertDialog.Builder( getActivity() ).setTitle( R.string.match ).setView( view ).setPositiveButton( android.R.string.ok, onOk )
+                        .create();
         dlg.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
         prepareSpinner( ( Spinner ) view.findViewById( R.id.gamer1Spinner ), gamers, true );
         prepareSpinner( ( Spinner ) view.findViewById( R.id.gamer2Spinner ), gamers, false );

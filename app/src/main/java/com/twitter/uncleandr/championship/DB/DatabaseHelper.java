@@ -13,7 +13,6 @@ import com.twitter.uncleandr.championship.DAO.Game;
 import com.twitter.uncleandr.championship.DAO.Gamer;
 import com.twitter.uncleandr.championship.DAO.Match;
 
-
 /**
  * Created by Heisenberg on 03.05.2015.
  */
@@ -23,7 +22,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper
     private static final String DATABASE_NAME = "champ.db";
 
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     // the DAO object we use to access the SimpleData table
     //pressure

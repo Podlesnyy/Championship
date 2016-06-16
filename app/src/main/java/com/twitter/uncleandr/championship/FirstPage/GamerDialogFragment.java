@@ -4,13 +4,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.twitter.uncleandr.championship.R;
-
 
 public class GamerDialogFragment extends DialogFragment
 {
@@ -27,16 +27,17 @@ public class GamerDialogFragment extends DialogFragment
         return fragment;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog( Bundle savedInstanceState )
     {
-        View view = getActivity().getLayoutInflater()
-                .inflate( R.layout.dialog_gamer, null );
+        View view = getActivity().getLayoutInflater().inflate( R.layout.dialog_gamer, null );
 
         gamerNameEdit = ( EditText ) view.findViewById( R.id.editTextGamerName );
         gamerNameEdit.setText( gamerName );
-        Dialog dlg = new AlertDialog.Builder( getActivity() ).setTitle( R.string.gamer ).setView( view ).setPositiveButton( android.R.string.ok,
-                onOk ).create();
+        Dialog dlg =
+                new AlertDialog.Builder( getActivity() ).setTitle( R.string.gamer ).setView( view ).setPositiveButton( android.R.string.ok, onOk )
+                        .create();
         dlg.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
         return dlg;
     }

@@ -1,6 +1,5 @@
 package com.twitter.uncleandr.championship.GameActivity;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -16,12 +15,9 @@ import com.twitter.uncleandr.championship.R;
 
 import java.sql.SQLException;
 
-
 public class GameActivity extends AppCompatActivity
 {
     private static final String param1 = "game";
-    private PagerAdapter mAdapter;
-    private ViewPager mViewPager;
     private Game game;
 
     public static void Create( AppCompatActivity activity, Game game )
@@ -45,8 +41,8 @@ public class GameActivity extends AppCompatActivity
         {
             e.printStackTrace();
         }
-        mAdapter = new PagerAdapter( getSupportFragmentManager(), game, getApplicationContext() );
-        mViewPager = ( ViewPager ) findViewById( R.id.view );
+        PagerAdapter mAdapter = new PagerAdapter( getSupportFragmentManager(), game, getApplicationContext() );
+        ViewPager mViewPager = ( ViewPager ) findViewById( R.id.view );
         mViewPager.setAdapter( mAdapter );
 
         TabLayout mSlidingTabLayout = ( TabLayout ) findViewById( R.id.sliding_tabs );

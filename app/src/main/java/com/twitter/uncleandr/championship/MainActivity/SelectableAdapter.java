@@ -6,7 +6,7 @@ import android.util.SparseBooleanArray;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class SelectableAdapter< VH extends RecyclerView.ViewHolder > extends RecyclerView.Adapter< VH >
+abstract class SelectableAdapter < VH extends RecyclerView.ViewHolder > extends RecyclerView.Adapter< VH >
 {
     private final SparseBooleanArray selectedItems;
 

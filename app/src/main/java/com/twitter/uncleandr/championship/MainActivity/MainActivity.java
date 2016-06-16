@@ -26,20 +26,16 @@ import com.twitter.uncleandr.championship.R;
 import java.sql.SQLException;
 import java.util.List;
 
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, Adapter.ViewHolder.ClickListener
 {
     private static final String AVATAR_URL = "https://pbs.twimg.com/profile_images/412967939772796928/VwPG3rwa.jpeg";
-
+    private final ActionModeCallback actionModeCallback = new ActionModeCallback();
     private DrawerLayout drawerLayout;
     private View content;
     private List< Game > games;
     private DatabaseHelper dbHelper;
     private Adapter adapter;
-
-    private final ActionModeCallback actionModeCallback = new ActionModeCallback();
     private ActionMode actionMode;
-
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -179,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else
         {
-            actionMode.setTitle(games.get( position ).getTitle());
+            actionMode.setTitle( games.get( position ).getTitle() );
             actionMode.invalidate();
         }
     }

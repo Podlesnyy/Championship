@@ -4,14 +4,12 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.ViewGroup;
 
 import com.twitter.uncleandr.championship.DAO.Game;
 import com.twitter.uncleandr.championship.GameActivity.GameFragment.PagerGameFragment;
 import com.twitter.uncleandr.championship.R;
 
 import java.util.ArrayList;
-
 
 /**
  * Created by Heisenberg on 19.04.2015.

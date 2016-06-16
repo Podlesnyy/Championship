@@ -24,7 +24,6 @@ import com.twitter.uncleandr.championship.R;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
 public class PagerMatchesFragment extends Fragment
 {
     private ArrayAdapter< Match > adapter;
@@ -57,8 +56,7 @@ public class PagerMatchesFragment extends Fragment
     }
 
     @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container,
-                              Bundle savedInstanceState )
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
     {
         return inflater.inflate( R.layout.fragment_pager_matches, container, false );
     }
@@ -86,8 +84,7 @@ public class PagerMatchesFragment extends Fragment
     private void CreateDialog( Match match, Boolean addToAdapter )
     {
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        MatchDialogResultListener adder = new MatchDialogResultListener( adapter, getMatches(), match,
-                addToAdapter );
+        MatchDialogResultListener adder = new MatchDialogResultListener( adapter, getMatches(), match, addToAdapter );
         MatchDialogFragment dialog = MatchDialogFragment.newInstance( game, match.getGamer1(), match.getGamer2(), adder );
         adder.dialogFragment = dialog;
         dialog.show( fm, "MatchPrors" );

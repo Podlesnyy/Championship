@@ -1,9 +1,6 @@
 package com.twitter.uncleandr.championship.GameActivity.GameFragment;
 
-
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +14,6 @@ import com.twitter.uncleandr.championship.R;
 
 public class PagerGameFragment extends android.support.v4.app.Fragment
 {
-
     private Game game;
 
     public PagerGameFragment()
@@ -60,10 +56,8 @@ public class PagerGameFragment extends android.support.v4.app.Fragment
         return true;
     }
 
-
     @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container,
-                              Bundle savedInstanceState )
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
     {
         View view = inflater.inflate( R.layout.activity_game_fragment_game, container, false );
         EditText edit = ( EditText ) view.findViewById( R.id.editText );

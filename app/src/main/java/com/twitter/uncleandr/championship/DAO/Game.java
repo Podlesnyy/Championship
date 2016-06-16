@@ -5,6 +5,8 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Date;
+
 /**
  * Created by Heisenberg on 29.04.2015.
  */
@@ -21,6 +23,9 @@ public class Game
     private ForeignCollection< Match > matches;
     @DatabaseField
     private String title;
+
+    @DatabaseField
+    private Date createDate;
 
     public ForeignCollection< Gamer > getGamers()
     {
@@ -71,5 +76,15 @@ public class Game
     public Boolean getIsActive()
     {
         return true;
+    }
+
+    public Date getCreateDate()
+    {
+        return createDate;
+    }
+
+    public void setCreateDate( Date createDate )
+    {
+        this.createDate = createDate;
     }
 }

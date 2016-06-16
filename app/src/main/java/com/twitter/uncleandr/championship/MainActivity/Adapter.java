@@ -136,8 +136,7 @@ public class Adapter extends SelectableAdapter< Adapter.ViewHolder >
         return item.getIsActive() ? TYPE_ACTIVE : TYPE_INACTIVE;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
-            View.OnLongClickListener
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
         final TextView title;
         final TextView subtitle;
@@ -175,6 +174,7 @@ public class Adapter extends SelectableAdapter< Adapter.ViewHolder >
         public interface ClickListener
         {
             void onItemClicked( int position );
+
             void onItemLongClicked( int position );
         }
     }

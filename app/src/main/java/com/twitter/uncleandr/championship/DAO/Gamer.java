@@ -12,7 +12,6 @@ public class Gamer
     @DatabaseField( generatedId = true )
     private int id;
 
-
     @DatabaseField( foreign = true )
     private Game game;
 
